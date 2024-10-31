@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// 홈페이지
+// 홈 페이지
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('FamiliRoom'),
-        backgroundColor: Colors.white, 
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -39,8 +39,22 @@ class HomePage extends StatelessWidget {
   }
 }
 
+// 스토어 페이지
+class StorePage extends StatelessWidget {
+  const StorePage({Key? key}) : super(key: key);
 
-
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('스토어'),
+        backgroundColor: Colors.white,
+      ),
+      body: Center(child: const Text('스토어 페이지 내용')),
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 1),
+    );
+  }
+}
 
 // 좋아요 페이지
 class HeartPage extends StatelessWidget {
@@ -51,38 +65,27 @@ class HeartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('좋아요'),
-        backgroundColor: Colors.white, 
+        backgroundColor: Colors.white,
       ),
       body: Center(child: const Text('하트 페이지 내용')),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 1), 
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2),
     );
   }
 }
 
-// 장바구니
-class CartPage extends StatelessWidget {
-  const CartPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('장바구니')),
-      body: Center(child: const Text('장바구니 페이지 내용')),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2), 
-    );
-  }
-}
-
-//유저 페이지
+// 유저 페이지
 class UserPage extends StatelessWidget {
   const UserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('마이 페이지')),
+      appBar: AppBar(
+        title: const Text('마이페이지'),
+        backgroundColor: Colors.white,
+      ),
       body: Center(child: const Text('사용자 페이지 내용')),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 3), 
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 3),
     );
   }
 }
@@ -106,25 +109,25 @@ class BottomNavigationBarWidget extends StatelessWidget {
             height: 20,
             color: currentIndex == 0 ? Colors.black : Colors.grey,
           ),
-          label: '홈', // 라벨을 빈 문자열로 설정
+          label: '', // 라벨을 빈 문자열로 설정
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset(
+            'store.png',
+            width: 20,
+            height: 20,
+            color: currentIndex == 1 ? Colors.black : Colors.grey,
+          ),
+          label: '', // 라벨을 빈 문자열로 설정
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
             'heart.png',
             width: 20,
             height: 20,
-            color: currentIndex == 1 ? Colors.black : Colors.grey,
-          ),
-          label: '좋아요',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            'cart.png',
-            width: 20,
-            height: 20,
             color: currentIndex == 2 ? Colors.black : Colors.grey,
           ),
-          label: '장바구니',
+          label: '', // 라벨을 빈 문자열로 설정
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
@@ -133,7 +136,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
             height: 20,
             color: currentIndex == 3 ? Colors.black : Colors.grey,
           ),
-          label: '마이페이지',
+          label: '', // 라벨을 빈 문자열로 설정
         ),
       ],
       onTap: (index) {
@@ -143,10 +146,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
             page = const HomePage();
             break;
           case 1:
-            page = const HeartPage();
+            page = const StorePage();
             break;
           case 2:
-            page = const CartPage();
+            page = const HeartPage();
             break;
           case 3:
             page = const UserPage();
