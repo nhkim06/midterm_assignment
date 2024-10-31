@@ -19,118 +19,146 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// 홈페이지
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('홈')),
+      appBar: AppBar(
+        title: const Text('FamiliRoom'),
+        backgroundColor: Colors.white, 
+        automaticallyImplyLeading: false,
+      ),
       body: Center(
-        child: ElevatedButton(
-          child: const Text('입력 폼으로'),
-          
-          onPressed: () {
-            // MaterialPageRoute를 사용하여 새 페이지로 이동
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          },
-        ),
+        child: const Text('홈 페이지 내용'),
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(),
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
     );
   }
 }
 
-class BottomNavigationBarWidget extends StatelessWidget {
-  const BottomNavigationBarWidget({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-              );
-            },
-            child: Image.asset('home.png', width: 25, height: 25),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HeartPage()),
-              );
-            },
-            child: Image.asset('heart.png', width: 25, height: 25),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const CartPage()),
-              );
-            },
-            child: Image.asset('cart.png', width: 25, height: 25),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const UserPage()),
-              );
-            },
-            child: Image.asset('user.png', width: 25, height: 25),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
-// 각 페이지의 스켈레톤 코드
+
+// 좋아요 페이지
 class HeartPage extends StatelessWidget {
   const HeartPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('하트 페이지')),
+      appBar: AppBar(
+        title: const Text('좋아요'),
+        backgroundColor: Colors.white, 
+      ),
       body: Center(child: const Text('하트 페이지 내용')),
-      bottomNavigationBar: const BottomNavigationBarWidget(), // 하단바 재사용
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 1), 
     );
   }
 }
 
+// 장바구니
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('장바구니 페이지')),
+      appBar: AppBar(title: const Text('장바구니')),
       body: Center(child: const Text('장바구니 페이지 내용')),
-      bottomNavigationBar: const BottomNavigationBarWidget(), // 하단바 재사용
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2), 
     );
   }
 }
 
+//유저 페이지
 class UserPage extends StatelessWidget {
   const UserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('사용자 페이지')),
+      appBar: AppBar(title: const Text('마이 페이지')),
       body: Center(child: const Text('사용자 페이지 내용')),
-      bottomNavigationBar: const BottomNavigationBarWidget(), // 하단바 재사용
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 3), 
+    );
+  }
+}
+
+// 하단바
+class BottomNavigationBarWidget extends StatelessWidget {
+  final int currentIndex;
+
+  const BottomNavigationBarWidget({Key? key, required this.currentIndex}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      currentIndex: currentIndex,
+      items: [
+        BottomNavigationBarItem(
+          icon: Image.asset(
+            'home.png',
+            width: 20,
+            height: 20,
+            color: currentIndex == 0 ? Colors.black : Colors.grey,
+          ),
+          label: '홈', // 라벨을 빈 문자열로 설정
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset(
+            'heart.png',
+            width: 20,
+            height: 20,
+            color: currentIndex == 1 ? Colors.black : Colors.grey,
+          ),
+          label: '좋아요',
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset(
+            'cart.png',
+            width: 20,
+            height: 20,
+            color: currentIndex == 2 ? Colors.black : Colors.grey,
+          ),
+          label: '장바구니',
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset(
+            'user.png',
+            width: 20,
+            height: 20,
+            color: currentIndex == 3 ? Colors.black : Colors.grey,
+          ),
+          label: '마이페이지',
+        ),
+      ],
+      onTap: (index) {
+        Widget page;
+        switch (index) {
+          case 0:
+            page = const HomePage();
+            break;
+          case 1:
+            page = const HeartPage();
+            break;
+          case 2:
+            page = const CartPage();
+            break;
+          case 3:
+            page = const UserPage();
+            break;
+          default:
+            return;
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
+      },
     );
   }
 }
