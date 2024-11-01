@@ -77,7 +77,7 @@ class CartPage extends StatelessWidget {
 
 
 //**********하단 페이지**********//
-// 홈 페이지 
+// 홈 페이지
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -90,47 +90,50 @@ class _HomePageState extends State<HomePage> {
 
   final Map<String, List<Map<String, String>>> products = {
     '의자': [
-      {'name': '의자1', 'manufacturer': '제작사 A', 'image': 'assets/chair1.png', 'price': '10,000'},
-      {'name': '의자2', 'manufacturer': '제작사 B', 'image': 'assets/chair2.png', 'price': '15,000'},
-      {'name': '의자3', 'manufacturer': '제작사 C', 'image': 'assets/chair3.png', 'price': '20,000'},
-      {'name': '의자4', 'manufacturer': '제작사 D', 'image': 'assets/chair4.png', 'price': '25,000'},
-      {'name': '의자5', 'manufacturer': '제작사 E', 'image': 'assets/chair5.png', 'price': '30,000'},
-      {'name': '의자6', 'manufacturer': '제작사 F', 'image': 'assets/chair6.png', 'price': '35,000'},
+      {'name': '의자1', 'manufacturer': '제작사 A', 'image': 'assets/chair1.png', 'price': '₩100,000'},
+      {'name': '의자2', 'manufacturer': '제작사 B', 'image': 'assets/chair2.png', 'price': '₩120,000'},
+      {'name': '의자3', 'manufacturer': '제작사 C', 'image': 'assets/chair3.png', 'price': '₩150,000'},
+      {'name': '의자4', 'manufacturer': '제작사 D', 'image': 'assets/chair4.png', 'price': '₩80,000'},
+      {'name': '의자5', 'manufacturer': '제작사 E', 'image': 'assets/chair5.png', 'price': '₩110,000'},
+      {'name': '의자6', 'manufacturer': '제작사 F', 'image': 'assets/chair6.png', 'price': '₩130,000'},
     ],
     '책상': [
-      {'name': '책상1', 'manufacturer': '제작사 G', 'image': 'assets/desk1.png', 'price': '40,000'},
-      {'name': '책상2', 'manufacturer': '제작사 H', 'image': 'assets/desk2.png', 'price': '45,000'},
-      {'name': '책상3', 'manufacturer': '제작사 I', 'image': 'assets/desk3.png', 'price': '50,000'},
-      {'name': '책상4', 'manufacturer': '제작사 J', 'image': 'assets/desk4.png', 'price': '55,000'},
+      {'name': '책상1', 'manufacturer': '제작사 G', 'image': 'assets/desk1.png', 'price': '₩200,000'},
+      {'name': '책상2', 'manufacturer': '제작사 H', 'image': 'assets/desk2.png', 'price': '₩180,000'},
+      {'name': '책상3', 'manufacturer': '제작사 I', 'image': 'assets/desk3.png', 'price': '₩250,000'},
+      {'name': '책상4', 'manufacturer': '제작사 J', 'image': 'assets/desk4.png', 'price': '₩220,000'},
     ],
     '소파': [
-      {'name': '소파1', 'manufacturer': '제작사 K', 'image': 'assets/sofa1.png', 'price': '60,000'},
-      {'name': '소파2', 'manufacturer': '제작사 L', 'image': 'assets/sofa2.png', 'price': '65,000'},
-      {'name': '소파3', 'manufacturer': '제작사 M', 'image': 'assets/sofa3.png', 'price': '70,000'},
-      {'name': '소파4', 'manufacturer': '제작사 N', 'image': 'assets/sofa4.png', 'price': '75,000'},
-      {'name': '소파5', 'manufacturer': '제작사 O', 'image': 'assets/sofa5.png', 'price': '80,000'},
-      {'name': '소파6', 'manufacturer': '제작사 P', 'image': 'assets/sofa6.png', 'price': '85,000'},
+      {'name': '소파1', 'manufacturer': '제작사 K', 'image': 'assets/sofa1.png', 'price': '₩300,000'},
+      {'name': '소파2', 'manufacturer': '제작사 L', 'image': 'assets/sofa2.png', 'price': '₩350,000'},
+      {'name': '소파3', 'manufacturer': '제작사 M', 'image': 'assets/sofa3.png', 'price': '₩400,000'},
+      {'name': '소파4', 'manufacturer': '제작사 N', 'image': 'assets/sofa4.png', 'price': '₩450,000'},
+      {'name': '소파5', 'manufacturer': '제작사 O', 'image': 'assets/sofa5.png', 'price': '₩500,000'},
+      {'name': '소파6', 'manufacturer': '제작사 P', 'image': 'assets/sofa6.png', 'price': '₩550,000'},
     ],
     '침대': [
-      {'name': '침대1', 'manufacturer': '제작사 Q', 'image': 'assets/bed1.png', 'price': '90,000'},
-      {'name': '침대2', 'manufacturer': '제작사 R', 'image': 'assets/bed2.png', 'price': '95,000'},
-      {'name': '침대3', 'manufacturer': '제작사 S', 'image': 'assets/bed3.png', 'price': '100,000'},
-      {'name': '침대4', 'manufacturer': '제작사 T', 'image': 'assets/bed4.png', 'price': '105,000'},
+      {'name': '침대1', 'manufacturer': '제작사 Q', 'image': 'assets/bed1.png', 'price': '₩500,000'},
+      {'name': '침대2', 'manufacturer': '제작사 R', 'image': 'assets/bed2.png', 'price': '₩450,000'},
+      {'name': '침대3', 'manufacturer': '제작사 S', 'image': 'assets/bed3.png', 'price': '₩600,000'},
+      {'name': '침대4', 'manufacturer': '제작사 T', 'image': 'assets/bed4.png', 'price': '₩550,000'},
     ],
     '식탁': [
-      {'name': '식탁1', 'manufacturer': '제작사 U', 'image': 'assets/table1.png', 'price': '110,000'},
-      {'name': '식탁2', 'manufacturer': '제작사 V', 'image': 'assets/table2.png', 'price': '115,000'},
-      {'name': '식탁3', 'manufacturer': '제작사 W', 'image': 'assets/table3.png', 'price': '120,000'},
-      {'name': '식탁4', 'manufacturer': '제작사 X', 'image': 'assets/table4.png', 'price': '125,000'},
+      {'name': '식탁1', 'manufacturer': '제작사 U', 'image': 'assets/table1.png', 'price': '₩400,000'},
+      {'name': '식탁2', 'manufacturer': '제작사 V', 'image': 'assets/table2.png', 'price': '₩420,000'},
+      {'name': '식탁3', 'manufacturer': '제작사 W', 'image': 'assets/table3.png', 'price': '₩450,000'},
+      {'name': '식탁4', 'manufacturer': '제작사 X', 'image': 'assets/table4.png', 'price': '₩480,000'},
+      {'name': '식탁5', 'manufacturer': '제작사 Y', 'image': 'assets/table5.png', 'price': '₩500,000'},
+      {'name': '식탁6', 'manufacturer': '제작사 Z', 'image': 'assets/table6.png', 'price': '₩530,000'},
     ],
   };
-
+  
   String selectedCategory = '의자';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'FamiliRoom', context: context, isHomePage: true),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -166,17 +169,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 16.0, bottom: 8.0), // 위쪽 패딩 키움
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '추천 상품',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold), // 크기 증가
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0), // 아래쪽 패딩 줄임
+              padding: const EdgeInsets.all(16.0),
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -187,48 +180,58 @@ class _HomePageState extends State<HomePage> {
                   childAspectRatio: 2 / 3,
                 ),
                 itemCount: products[selectedCategory]!.length,
+                
                 itemBuilder: (context, index) {
-                  final product = products[selectedCategory]![index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white, // 그리드 배경색을 흰색으로 설정
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0), // 이미지 영역의 패딩
-                            child: Image.asset(
-                              product['image']!,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0), // 텍스트 패딩
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start, // 텍스트 왼쪽 정렬
-                            children: [
-                              Text(
-                                product['name']!,
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                product['manufacturer']!,
-                                style: const TextStyle(fontSize: 14, color: Colors.grey),
-                              ),
-                              Text(
-                                '${product['price']} 원', // 가격 추가
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // 가격 스타일
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+  final product = products[selectedCategory]![index];
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.end, // Align text to the bottom
+      children: [
+        Container(
+          width: 80, // 가로 크기 80
+          height: 60, // 세로 크기를 줄입니다 (예: 60으로 설정)
+          child: Image.asset(
+            product['image']!,
+            fit: BoxFit.contain, // 이미지 비율 유지
+          ),
+        ),
+        const SizedBox(height: 4),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                product['price']!, // 가격을 위로 이동
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: 10), // 패딩 10 추가
+              Text(
+                product['name']!, // 가구 이름
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey), // 가구 이름을 볼드로 설정
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: 2), // 제작사와의 간격
+              Text(
+                product['manufacturer']!, // 제작사
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: 10), // 제작사 아래에 패딩 10 추가
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+},
+
+
               ),
             ),
           ],
