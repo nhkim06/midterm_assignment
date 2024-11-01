@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 
-//**********상단**********//
+//**********상단 페이지**********//
 // 검색 페이지
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -43,16 +43,7 @@ class SearchPage extends StatelessWidget {
         ),
       ),
       body: Center(child: const Text('검색 페이지 내용')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ChatPage()),
-          );
-        },
-        backgroundColor: const Color(0xFFD5FDC1), // 연두색
-        child: const Icon(Icons.chat, color: Color(0xFF808080)), // 회색 아이콘
-      ),
+      floatingActionButton: const ChatFloatingActionButton(), // Use custom button here
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
@@ -85,7 +76,7 @@ class CartPage extends StatelessWidget {
 }
 
 
-//**********하단**********//
+//**********하단 페이지**********//
 // 홈 페이지
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -94,8 +85,20 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'FamiliRoom', context: context, isHomePage: true), // 홈 페이지
-      body: Center(
-        child: const Text('홈 페이지 내용'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/adv.png',
+              width: double.infinity,
+              fit: BoxFit.cover, // Ensures the image covers the available width
+            ),
+            const SizedBox(height: 16), // Add spacing below the banner if needed
+            const Center(
+              child: Text('홈 페이지 내용'),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
       floatingActionButton: const ChatFloatingActionButton(), // 추가된 부분
@@ -103,6 +106,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 
 // 스토어 페이지
 class StorePage extends StatelessWidget {
@@ -204,7 +208,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: ColorFiltered(
                 colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn), // 회색으로 필터링
-                child: Image.asset('search.png', width: 24, height: 24),
+                child: Image.asset('search.png', width: 20, height: 20),
               ),
               onPressed: () {
                 Navigator.push(
@@ -216,7 +220,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: ColorFiltered(
                 colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn), // 회색으로 필터링
-                child: Image.asset('cart.png', width: 24, height: 24),
+                child: Image.asset('cart.png', width: 20, height: 20),
               ),
               onPressed: () {
                 Navigator.push(
@@ -339,7 +343,12 @@ class ChatFloatingActionButton extends StatelessWidget {
         );
       },
       backgroundColor: const Color(0xFFD5FDC1), // 연두색
-      child: const Icon(Icons.chat, color: Color(0xFF529147)), // 회색 아이콘
+      child: Image.asset(
+        'assets/chatbot.png',
+        color: const Color(0xFF529147), // Apply green color to the icon
+        height: 24,
+        width: 24,    
+      ),
     );
   }
 }
