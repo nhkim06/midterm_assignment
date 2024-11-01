@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
@@ -127,145 +128,228 @@ class _HomePageState extends State<HomePage> {
   };
   
   String selectedCategory = '의자';
-  
+  String currentImage = 'assets/adv.png';
+  Timer? _timer;
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: 'FamiliRoom', context: context, isHomePage: true),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/adv.png',
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: categories.map((category) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = category;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: Text(
-                        category,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: selectedCategory == category ? Colors.green : Colors.black,
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  
-                  const Text(
-                    '추천상품', // 추천상품 텍스트
-                    style: TextStyle(
-                      fontSize: 16, // 폰트 크기
-                      fontWeight: FontWeight.bold, // 굵게
-                      color: Colors.black, // 텍스트 색상
-                    ),
-                  ),
-                  const SizedBox(height: 16), // 추천상품과 그리드 사이의 간격
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 3 / 4,
-                    ),
-                    itemCount: products[selectedCategory]!.length,
-                    itemBuilder: (context, index) {
-                      final product = products[selectedCategory]![index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChairDetailPage(product: product),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 40), // Optional: Add or adjust height as needed
-                              Container(
-                                width: 80, // Set width to 80
-                                height: 60, // Set height to 60
-                                child: Image.asset(
-                                  product['image']!,
-                                  fit: BoxFit.contain, // Maintain image aspect ratio
-                                ),
-                              ),
-                              const SizedBox(height: 15), // Space between the image and price
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      product['price']!, // Price positioned above
-                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    const SizedBox(height: 3), // Padding below price
-                                    Text(
-                                      product['name']!, // Furniture name
-                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey), // Bold furniture name
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    const SizedBox(height: 0), // Space between name and manufacturer
-                                    Text(
-                                      product['manufacturer']!, // Manufacturer
-                                      style: const TextStyle(fontSize: 12, color: Colors.grey),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    const SizedBox(height: 15), // Remove additional space below manufacturer
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
-      floatingActionButton: const ChatFloatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-    );
+  void initState() {
+    super.initState();
+    _startImageRotation();
   }
+
+  void _startImageRotation() {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      setState(() {
+        currentImage = currentImage == 'assets/adv.png'
+            ? 'assets/adv2.png'
+            : 'assets/adv.png';
+      });
+    });
+  }
+
+// List of advertisement images
+List<String> images = [
+  'assets/adv1.png',
+  'assets/adv2.png',
+  'assets/adv3.png',
+  // 광고 이미지 추가
+];
+
+// Current index of the image being displayed
+int currentIndex = 0;
+
+void _showPrevImage() {
+  setState(() {
+    // Decrement the index and wrap around if needed
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    currentImage = images[currentIndex]; // Update the current image
+  });
 }
 
+void _showNextImage() {
+  setState(() {
+    // Increment the index and wrap around if needed
+    currentIndex = (currentIndex + 1) % images.length;
+    currentImage = images[currentIndex]; // Update the current image
+  });
+}
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: CustomAppBar(title: 'FamiliRoom', context: context, isHomePage: true),
+    backgroundColor: Colors.white,
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center, // Centering both buttons horizontally
+            children: [
+              Image.asset(
+                currentImage,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+                left: 16, // Adjust left position for the prev button
+                child: Opacity(
+                  opacity: 0.5, // Set transparency to 70%
+                  child: GestureDetector(
+                    onTap: _showPrevImage, // Call method to show the previous image
+                    child: Image.asset(
+                      'assets/prev.png', // Path to your PNG button image for previous
+                      width: 35, // Set width to 50
+                      height: 35, // Set height to 50
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 16, // Adjust right position for the next button
+                child: Opacity(
+                  opacity: 0.5, // Set transparency to 70%
+                  child: GestureDetector(
+                    onTap: _showNextImage, // Call method to show the next image
+                    child: Image.asset(
+                      'assets/next.png', // Path to your PNG button image for next
+                      width: 35, // Set width to 50
+                      height: 35, // Set height to 50
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: categories.map((category) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedCategory = category;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Text(
+                      category,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: selectedCategory == category ? Colors.green : Colors.black,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '추천상품', // 추천상품 텍스트
+                  style: TextStyle(
+                    fontSize: 16, // 폰트 크기
+                    fontWeight: FontWeight.bold, // 굵게
+                    color: Colors.black, // 텍스트 색상
+                  ),
+                ),
+                const SizedBox(height: 16), // 추천상품과 그리드 사이의 간격
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 3 / 4,
+                  ),
+                  itemCount: products[selectedCategory]!.length,
+                  itemBuilder: (context, index) {
+                    final product = products[selectedCategory]![index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChairDetailPage(product: product),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 40), // Optional: Add or adjust height as needed
+                            Container(
+                              width: 80, // Set width to 80
+                              height: 60, // Set height to 60
+                              child: Image.asset(
+                                product['image']!,
+                                fit: BoxFit.contain, // Maintain image aspect ratio
+                              ),
+                            ),
+                            const SizedBox(height: 15), // Space between the image and price
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product['price']!, // Price positioned above
+                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  const SizedBox(height: 3), // Padding below price
+                                  Text(
+                                    product['name']!, // Furniture name
+                                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey), // Bold furniture name
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  const SizedBox(height: 0), // Space between name and manufacturer
+                                  Text(
+                                    product['manufacturer']!, // Manufacturer
+                                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  const SizedBox(height: 15), // Remove additional space below manufacturer
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+    bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
+    floatingActionButton: const ChatFloatingActionButton(),
+    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+  );
+}
+
+}
 // 스토어 페이지
 class StorePage extends StatelessWidget {
   const StorePage({Key? key}) : super(key: key);
