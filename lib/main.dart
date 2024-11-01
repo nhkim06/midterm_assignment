@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -18,6 +16,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
 
 //**********상단 페이지**********//
@@ -128,7 +127,7 @@ class _HomePageState extends State<HomePage> {
   };
   
   String selectedCategory = '의자';
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,68 +169,91 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 2 / 3,
-                ),
-                itemCount: products[selectedCategory]!.length,
-                
-                itemBuilder: (context, index) {
-  final product = products[selectedCategory]![index];
-  return Container(
-    decoration: BoxDecoration(
-      color: Colors.grey[200],
-      borderRadius: BorderRadius.circular(12),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.end, // Align text to the bottom
-      children: [
-        Container(
-          width: 80, // 가로 크기 80
-          height: 60, // 세로 크기를 줄입니다 (예: 60으로 설정)
-          child: Image.asset(
-            product['image']!,
-            fit: BoxFit.contain, // 이미지 비율 유지
-          ),
-        ),
-        const SizedBox(height: 4),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                product['price']!, // 가격을 위로 이동
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: 10), // 패딩 10 추가
-              Text(
-                product['name']!, // 가구 이름
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey), // 가구 이름을 볼드로 설정
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: 2), // 제작사와의 간격
-              Text(
-                product['manufacturer']!, // 제작사
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: 10), // 제작사 아래에 패딩 10 추가
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-},
-
-
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  
+                  const Text(
+                    '추천상품', // 추천상품 텍스트
+                    style: TextStyle(
+                      fontSize: 16, // 폰트 크기
+                      fontWeight: FontWeight.bold, // 굵게
+                      color: Colors.black, // 텍스트 색상
+                    ),
+                  ),
+                  const SizedBox(height: 16), // 추천상품과 그리드 사이의 간격
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      childAspectRatio: 3 / 4,
+                    ),
+                    itemCount: products[selectedCategory]!.length,
+                    itemBuilder: (context, index) {
+                      final product = products[selectedCategory]![index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(product: product),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 40), // Optional: Add or adjust height as needed
+                              Container(
+                                width: 80, // Set width to 80
+                                height: 60, // Set height to 60
+                                child: Image.asset(
+                                  product['image']!,
+                                  fit: BoxFit.contain, // Maintain image aspect ratio
+                                ),
+                              ),
+                              const SizedBox(height: 15), // Space between the image and price
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product['price']!, // Price positioned above
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    const SizedBox(height: 3), // Padding below price
+                                    Text(
+                                      product['name']!, // Furniture name
+                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey), // Bold furniture name
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    const SizedBox(height: 0), // Space between name and manufacturer
+                                    Text(
+                                      product['manufacturer']!, // Manufacturer
+                                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    const SizedBox(height: 15), // Remove additional space below manufacturer
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ],
@@ -243,9 +265,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
-
 
 // 스토어 페이지
 class StorePage extends StatelessWidget {
@@ -298,6 +317,39 @@ class UserPage extends StatelessWidget {
 
 
 //**********기타 페이지**********//
+// 상품 페이지
+class ChairDetailPage extends StatelessWidget {
+  final Map<String, String> product;
+
+  const ChairDetailPage({Key? key, required this.product}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(product['name']!),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(product['image']!),
+            Text(
+              product['price']!,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              product['manufacturer']!,
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 // 채팅 페이지
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
