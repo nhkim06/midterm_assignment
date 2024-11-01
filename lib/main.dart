@@ -77,7 +77,7 @@ class CartPage extends StatelessWidget {
 
 
 //**********하단 페이지**********//
-// 홈 페이지
+// 홈 페이지 (완)
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -284,49 +284,68 @@ void dispose() {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Color(0xFFF5F5F5),
+                            color: const Color(0xFFF5F5F5),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 40), // Optional: Add or adjust height as needed
-                              Container(
-                                width: 80, // Set width to 80
-                                height: 60, // Set height to 60
-                                child: Image.asset(
-                                  product['image']!,
-                                  fit: BoxFit.contain, // Maintain image aspect ratio
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Product Image
+                                Center(
+                                  child: Container(
+                                    width: 80,
+                                    height: 60,
+                                    child: Image.asset(
+                                      product['image']!,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 15), // Space between the image and price
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                const SizedBox(height: 15), // Space between image and price
+
+                                // Product Details
+                                Text(
+                                  product['price']!,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                const SizedBox(height: 3), // Space below price
+                                Text(
+                                  product['name']!,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                const SizedBox(height: 3), // Space between name and manufacturer
+
+                                // Manufacturer and Heart Icon in the same row
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      product['price']!, // Price positioned above
-                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    const SizedBox(height: 3), // Padding below price
-                                    Text(
-                                      product['name']!, // Furniture name
-                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey), // Bold furniture name
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    const SizedBox(height: 0), // Space between name and manufacturer
-                                    Text(
-                                      product['manufacturer']!, // Manufacturer
+                                      product['manufacturer']!,
                                       style: const TextStyle(fontSize: 12, color: Colors.grey),
                                       textAlign: TextAlign.left,
                                     ),
-                                    const SizedBox(height: 15), // Remove additional space below manufacturer
+                                    Image.asset(
+                                      'assets/heart.png',
+                                      width: 16,
+                                      height: 16,
+                                      color: Colors.grey,
+                                    ),
                                   ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
