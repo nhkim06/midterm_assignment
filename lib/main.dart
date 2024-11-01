@@ -77,35 +77,111 @@ class CartPage extends StatelessWidget {
 
 
 //**********하단 페이지**********//
-// 홈 페이지
-class HomePage extends StatelessWidget {
+
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
+
+  final Map<String, List<String>> products = {
+    '의자': ['의자1', '의자2', '의자3', '의자4', '의자5', '의자6'],
+    '책상': ['책상1', '책상2'],
+    '소파': ['소파1', '소파2', '소파3'],
+    '침대': ['침대1'],
+    '식탁': ['식탁1', '식탁2'],
+  };
+
+  String selectedCategory = '의자';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'FamiliRoom', context: context, isHomePage: true), // 홈 페이지
+      appBar: CustomAppBar(title: 'FamiliRoom', context: context, isHomePage: true),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Image.asset(
               'assets/adv.png',
               width: double.infinity,
-              fit: BoxFit.cover, // Ensures the image covers the available width
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 16), // Add spacing below the banner if needed
-            const Center(
-              child: Text('홈 페이지 내용'),
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: categories.map((category) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = category;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: Text(
+                        category,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: selectedCategory == category ? Colors.green : Colors.black,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
+            selectedCategory == '의자'
+                ? Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, // 열의 개수
+                        mainAxisSpacing: 8, // 행 간격
+                        crossAxisSpacing: 8, // 열 간격
+                        childAspectRatio: 2 / 3, // 텍스트의 비율 조정
+                      ),
+                      itemCount: products[selectedCategory]!.length,
+                      itemBuilder: (context, index) {
+                        final product = products[selectedCategory]![index];
+                        return Container(
+                          color: Colors.grey[200], // 배경색을 연한 회색으로 설정
+                          alignment: Alignment.center, // 텍스트 가운데 정렬
+                          child: Text(
+                            product,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : Column(
+                    children: products[selectedCategory]!
+                        .map((product) => ListTile(
+                              title: Text(product),
+                              onTap: () {
+                                // 제품 클릭 처리
+                              },
+                            ))
+                        .toList(),
+                  ),
           ],
         ),
       ),
       bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
-      floatingActionButton: const ChatFloatingActionButton(), // 추가된 부분
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // 위치 설정
+      floatingActionButton: const ChatFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
+
 
 
 // 스토어 페이지
@@ -181,74 +257,79 @@ class ChatPage extends StatelessWidget {
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final BuildContext context;
-  final bool isHomePage; // 추가된 매개변수
+  final bool isHomePage;
 
   const CustomAppBar({
     Key? key,
     required this.title,
     required this.context,
-    this.isHomePage = false, // 기본값은 false로 설정
+    this.isHomePage = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppBar(
-          title: Text(
-            title,
-            style: TextStyle(
-              fontWeight: isHomePage ? FontWeight.bold : FontWeight.normal, // 조건에 따라 볼드체 설정
-              fontSize: 24,
+        Container(
+          color: Colors.white, // 전체 배경 흰색으로 설정
+          child: AppBar(
+            title: Text(
+              title,
+              style: TextStyle(
+                fontWeight: isHomePage ? FontWeight.bold : FontWeight.normal,
+                fontSize: 24,
+              ),
             ),
+            backgroundColor: Colors.white,
+            automaticallyImplyLeading: false,
+            elevation: 0, // 그림자 제거
+            actions: [
+              IconButton(
+                icon: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+                  child: Image.asset('search.png', width: 20, height: 20),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                  );
+                },
+              ),
+              IconButton(
+                icon: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+                  child: Image.asset('cart.png', width: 20, height: 20),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CartPage()),
+                  );
+                },
+              ),
+            ],
           ),
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              icon: ColorFiltered(
-                colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn), // 회색으로 필터링
-                child: Image.asset('search.png', width: 20, height: 20),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SearchPage()),
-                );
-              },
-            ),
-            IconButton(
-              icon: ColorFiltered(
-                colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn), // 회색으로 필터링
-                child: Image.asset('cart.png', width: 20, height: 20),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CartPage()),
-                );
-              },
-            ),
-          ],
         ),
         Container(
-          height: 1, // 보더의 두께 설정
-          color: Colors.grey.withOpacity(0.3), // 연한 회색 보더 색상
+          height: 1,
+          color: Colors.grey.withOpacity(0.3),
         ),
       ],
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(57.0); // AppBar의 높이 설정 (보더 포함)
+  Size get preferredSize => const Size.fromHeight(57.0);
 }
+
 
 
 
 //**********하단 바 디자인**********//
 class BottomNavigationBarWidget extends StatelessWidget {
   final int currentIndex;
-  
+
   const BottomNavigationBarWidget({Key? key, required this.currentIndex}) : super(key: key);
 
   @override
@@ -261,6 +342,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white, // Set background color to white
         currentIndex: currentIndex,
         items: [
           BottomNavigationBarItem(
@@ -327,6 +409,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
     );
   }
 }
+
 
 
 //**********채팅 플로팅 버튼**********//
