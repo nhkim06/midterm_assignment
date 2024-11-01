@@ -77,7 +77,7 @@ class CartPage extends StatelessWidget {
 
 
 //**********하단 페이지**********//
-
+// 홈 페이지 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -88,12 +88,41 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
 
-  final Map<String, List<String>> products = {
-    '의자': ['의자1', '의자2', '의자3', '의자4', '의자5', '의자6'],
-    '책상': ['책상1', '책상2'],
-    '소파': ['소파1', '소파2', '소파3'],
-    '침대': ['침대1'],
-    '식탁': ['식탁1', '식탁2'],
+  final Map<String, List<Map<String, String>>> products = {
+    '의자': [
+      {'name': '의자1', 'manufacturer': '제작사 A', 'image': 'assets/chair1.png', 'price': '10,000'},
+      {'name': '의자2', 'manufacturer': '제작사 B', 'image': 'assets/chair2.png', 'price': '15,000'},
+      {'name': '의자3', 'manufacturer': '제작사 C', 'image': 'assets/chair3.png', 'price': '20,000'},
+      {'name': '의자4', 'manufacturer': '제작사 D', 'image': 'assets/chair4.png', 'price': '25,000'},
+      {'name': '의자5', 'manufacturer': '제작사 E', 'image': 'assets/chair5.png', 'price': '30,000'},
+      {'name': '의자6', 'manufacturer': '제작사 F', 'image': 'assets/chair6.png', 'price': '35,000'},
+    ],
+    '책상': [
+      {'name': '책상1', 'manufacturer': '제작사 G', 'image': 'assets/desk1.png', 'price': '40,000'},
+      {'name': '책상2', 'manufacturer': '제작사 H', 'image': 'assets/desk2.png', 'price': '45,000'},
+      {'name': '책상3', 'manufacturer': '제작사 I', 'image': 'assets/desk3.png', 'price': '50,000'},
+      {'name': '책상4', 'manufacturer': '제작사 J', 'image': 'assets/desk4.png', 'price': '55,000'},
+    ],
+    '소파': [
+      {'name': '소파1', 'manufacturer': '제작사 K', 'image': 'assets/sofa1.png', 'price': '60,000'},
+      {'name': '소파2', 'manufacturer': '제작사 L', 'image': 'assets/sofa2.png', 'price': '65,000'},
+      {'name': '소파3', 'manufacturer': '제작사 M', 'image': 'assets/sofa3.png', 'price': '70,000'},
+      {'name': '소파4', 'manufacturer': '제작사 N', 'image': 'assets/sofa4.png', 'price': '75,000'},
+      {'name': '소파5', 'manufacturer': '제작사 O', 'image': 'assets/sofa5.png', 'price': '80,000'},
+      {'name': '소파6', 'manufacturer': '제작사 P', 'image': 'assets/sofa6.png', 'price': '85,000'},
+    ],
+    '침대': [
+      {'name': '침대1', 'manufacturer': '제작사 Q', 'image': 'assets/bed1.png', 'price': '90,000'},
+      {'name': '침대2', 'manufacturer': '제작사 R', 'image': 'assets/bed2.png', 'price': '95,000'},
+      {'name': '침대3', 'manufacturer': '제작사 S', 'image': 'assets/bed3.png', 'price': '100,000'},
+      {'name': '침대4', 'manufacturer': '제작사 T', 'image': 'assets/bed4.png', 'price': '105,000'},
+    ],
+    '식탁': [
+      {'name': '식탁1', 'manufacturer': '제작사 U', 'image': 'assets/table1.png', 'price': '110,000'},
+      {'name': '식탁2', 'manufacturer': '제작사 V', 'image': 'assets/table2.png', 'price': '115,000'},
+      {'name': '식탁3', 'manufacturer': '제작사 W', 'image': 'assets/table3.png', 'price': '120,000'},
+      {'name': '식탁4', 'manufacturer': '제작사 X', 'image': 'assets/table4.png', 'price': '125,000'},
+    ],
   };
 
   String selectedCategory = '의자';
@@ -112,7 +141,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: categories.map((category) {
@@ -136,42 +165,72 @@ class _HomePageState extends State<HomePage> {
                 }).toList(),
               ),
             ),
-            selectedCategory == '의자'
-                ? Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, // 열의 개수
-                        mainAxisSpacing: 8, // 행 간격
-                        crossAxisSpacing: 8, // 열 간격
-                        childAspectRatio: 2 / 3, // 텍스트의 비율 조정
-                      ),
-                      itemCount: products[selectedCategory]!.length,
-                      itemBuilder: (context, index) {
-                        final product = products[selectedCategory]![index];
-                        return Container(
-                          color: Colors.grey[200], // 배경색을 연한 회색으로 설정
-                          alignment: Alignment.center, // 텍스트 가운데 정렬
-                          child: Text(
-                            product,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        );
-                      },
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 8.0), // 위쪽 패딩 키움
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '추천 상품',
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold), // 크기 증가
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0), // 아래쪽 패딩 줄임
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 2 / 3,
+                ),
+                itemCount: products[selectedCategory]!.length,
+                itemBuilder: (context, index) {
+                  final product = products[selectedCategory]![index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white, // 그리드 배경색을 흰색으로 설정
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  )
-                : Column(
-                    children: products[selectedCategory]!
-                        .map((product) => ListTile(
-                              title: Text(product),
-                              onTap: () {
-                                // 제품 클릭 처리
-                              },
-                            ))
-                        .toList(),
-                  ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0), // 이미지 영역의 패딩
+                            child: Image.asset(
+                              product['image']!,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0), // 텍스트 패딩
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start, // 텍스트 왼쪽 정렬
+                            children: [
+                              Text(
+                                product['name']!,
+                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                product['manufacturer']!,
+                                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                              ),
+                              Text(
+                                '${product['price']} 원', // 가격 추가
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // 가격 스타일
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -181,6 +240,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
 
 
 
