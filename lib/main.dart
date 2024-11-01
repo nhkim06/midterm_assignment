@@ -278,7 +278,7 @@ void dispose() {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ChairDetailPage(product: product),
+                              builder: (context) => ProductDetailPage(product: product),
                             ),
                           );
                         },
@@ -363,6 +363,7 @@ void dispose() {
     );
   }
 }
+
 // 스토어 페이지
 class StorePage extends StatelessWidget {
   const StorePage({Key? key}) : super(key: key);
@@ -415,32 +416,250 @@ class UserPage extends StatelessWidget {
 
 //**********기타 페이지**********//
 // 상품 페이지
-class ChairDetailPage extends StatelessWidget {
+
+class ProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
 
-  const ChairDetailPage({Key? key, required this.product}) : super(key: key);
+  const ProductDetailPage({Key? key, required this.product}) : super(key: key);
+
+  @override
+  _ProductDetailPageState createState() => _ProductDetailPageState();
+}
+
+class _ProductDetailPageState extends State<ProductDetailPage> {
+  bool isLiked = false; // Track whether the heart is liked
+  int likeCount = 41; // Initial like count
+  int rating = 0; // Initial rating as an integer
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(product['name']!),
+        title: Text(
+          widget.product['name']!,
+          style: const TextStyle(fontSize: 24), // Font size updated to 24
+        ),
+        backgroundColor: Colors.white, // AppBar background color
+        titleTextStyle: const TextStyle(color: Colors.black), // Title color
+        iconTheme: const IconThemeData(color: Colors.black), // Icon color
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(product['image']!),
-            Text(
-              product['price']!,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      backgroundColor: Colors.white, // Set Scaffold background to white
+      body: SingleChildScrollView( // Make body scrollable
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Image.asset(
+                  widget.product['image']!,
+                  width: 200, // Image size
+                  height: 200,
+                ),
+              ),
+              const SizedBox(height: 20), // Space between image and turn image
+              Center(
+                child: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                    Colors.grey, // Light gray color
+                    BlendMode.srcIn,
+                  ),
+                  child: Image.asset(
+                    'assets/turn.png',
+                    width: 50,
+                    height: 50,
+                  ),
+                ), // Turn image above the divider
+              ),
+              const SizedBox(height: 20), // Space between turn image and divider
+              const Divider(thickness: 1, color: Colors.grey), // Divider below the turn image
+              const SizedBox(height: 20), // Space between divider and price
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Aligns items in the row
+                children: [
+                  Text(
+                    widget.product['price']!,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (isLiked) {
+                          likeCount--; // Decrement the count if already liked
+                        } else {
+                          likeCount++; // Increment the count if not liked
+                        }
+                        isLiked = !isLiked; // Toggle the like state
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            isLiked ? Colors.red : Colors.grey.withOpacity(0.5), // Change color based on isLiked
+                            BlendMode.srcIn,
+                          ),
+                          child: Image.asset(
+                            'assets/heart.png', // Heart image
+                            width: 24, // Set width for the heart icon
+                            height: 24, // Set height for the heart icon
+                          ),
+                        ),
+                        const SizedBox(width: 4), // Space between icon and text
+                        Text('$likeCount'), // Display the like count
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8), // Space between price and product name
+              Text(
+                widget.product['name']!, // Product name above the manufacturer
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 4), // Space between product name and manufacturer
+              Text(
+                widget.product['manufacturer']!,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 20), // Increased space before color label
+              const SizedBox(height: 16), // Additional space above "색깔"
+              const Text(
+                '색깔',
+                style: TextStyle(
+                  fontSize: 18, // Size for color label
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20), // Space between color label and color circles
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start, // Align circles to the start
+                children: [
+                  _buildColorCircle(Colors.black),
+                  const SizedBox(width: 16), // Space between circles
+                  _buildColorCircle(Colors.white),
+                  const SizedBox(width: 16), // Space between circles
+                  _buildColorCircle(Colors.green),
+                  const SizedBox(width: 16), // Space between circles
+                  _buildColorCircle(Colors.blue),
+                ],
+              ),
+              const SizedBox(height: 20), // Padding below the color circles
+              
+              // Review Section
+              const Text(
+                '리뷰',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10), // Space between review title and rating bar
+              Row(
+                children: List.generate(5, (index) {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.star,
+                      color: index < rating ? Colors.amber : Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        rating = index + 1; // Update the rating based on the star clicked
+                      });
+                    },
+                  );
+                }),
+              ),
+              const SizedBox(height: 20), // Space after the rating bar
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white, // Background color of the navigation bar
+          border: Border(
+            top: BorderSide(
+              color: Colors.grey.withOpacity(0.3), // Light gray border
+              width: 1, // Border width
             ),
-            Text(
-              product['manufacturer']!,
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align buttons to the sides
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0), // Add padding around the button
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Add your action here for the cart
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white, // White background for the cart button
+                    side: const BorderSide(color: Colors.green, width: 2), // Green border
+                    shape: RoundedRectangleBorder( // Set shape to rectangular with rounded corners
+                      borderRadius: BorderRadius.circular(10), // Set border radius to 10
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 20), // Increased vertical padding
+                  ),
+                  child: const Text(
+                    '장바구니',
+                    style: TextStyle(
+                      color: Colors.green, // Green text color
+                      fontSize: 18, // Text size
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0), // Add padding around the button
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Add your action here for buy now
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // Background color for the buy button
+                    shape: RoundedRectangleBorder( // Set shape to rectangular with rounded corners
+                      borderRadius: BorderRadius.circular(10), // Set border radius to 10
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 20), // Increased vertical padding
+                  ),
+                  child: const Text(
+                    '바로 구매',
+                    style: TextStyle(
+                      color: Colors.white, // Text color
+                      fontSize: 18, // Text size
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Helper method to create a colored circle
+  Widget _buildColorCircle(Color color) {
+    return Container(
+      width: 24, // Width of the circle
+      height: 24, // Height of the circle
+      decoration: BoxDecoration(
+        color: color, // Circle color
+        shape: BoxShape.circle, // Make it circular
       ),
     );
   }
