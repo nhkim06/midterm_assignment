@@ -88,42 +88,42 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
 
-  final Map<String, List<Map<String, String>>> products = {
+  final Map<String, List<Map<String, String>>> products = {  //상품 데이터
     '의자': [
-      {'name': '의자1', 'manufacturer': '제작사 A', 'image': 'assets/chair1.png', 'price': '₩100,000'},
-      {'name': '의자2', 'manufacturer': '제작사 B', 'image': 'assets/chair2.png', 'price': '₩120,000'},
-      {'name': '의자3', 'manufacturer': '제작사 C', 'image': 'assets/chair3.png', 'price': '₩150,000'},
-      {'name': '의자4', 'manufacturer': '제작사 D', 'image': 'assets/chair4.png', 'price': '₩80,000'},
-      {'name': '의자5', 'manufacturer': '제작사 E', 'image': 'assets/chair5.png', 'price': '₩110,000'},
-      {'name': '의자6', 'manufacturer': '제작사 F', 'image': 'assets/chair6.png', 'price': '₩130,000'},
+      {'name': '의자1', 'manufacturer': '제작사 A', 'image': 'assets/chair1.png', 'price': '₩100,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '의자2', 'manufacturer': '제작사 B', 'image': 'assets/chair2.png', 'price': '₩120,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '의자3', 'manufacturer': '제작사 C', 'image': 'assets/chair3.png', 'price': '₩150,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '의자4', 'manufacturer': '제작사 D', 'image': 'assets/chair4.png', 'price': '₩80,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '의자5', 'manufacturer': '제작사 E', 'image': 'assets/chair5.png', 'price': '₩110,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '의자6', 'manufacturer': '제작사 F', 'image': 'assets/chair6.png', 'price': '₩130,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
     ],
     '책상': [
-      {'name': '책상1', 'manufacturer': '제작사 G', 'image': 'assets/desk1.png', 'price': '₩200,000'},
-      {'name': '책상2', 'manufacturer': '제작사 H', 'image': 'assets/desk2.png', 'price': '₩180,000'},
-      {'name': '책상3', 'manufacturer': '제작사 I', 'image': 'assets/desk3.png', 'price': '₩250,000'},
-      {'name': '책상4', 'manufacturer': '제작사 J', 'image': 'assets/desk4.png', 'price': '₩220,000'},
+      {'name': '책상1', 'manufacturer': '제작사 G', 'image': 'assets/desk1.png', 'price': '₩200,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '책상2', 'manufacturer': '제작사 H', 'image': 'assets/desk2.png', 'price': '₩180,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '책상3', 'manufacturer': '제작사 I', 'image': 'assets/desk3.png', 'price': '₩250,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '책상4', 'manufacturer': '제작사 J', 'image': 'assets/desk4.png', 'price': '₩220,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
     ],
     '소파': [
-      {'name': '소파1', 'manufacturer': '제작사 K', 'image': 'assets/sofa1.png', 'price': '₩300,000'},
-      {'name': '소파2', 'manufacturer': '제작사 L', 'image': 'assets/sofa2.png', 'price': '₩350,000'},
-      {'name': '소파3', 'manufacturer': '제작사 M', 'image': 'assets/sofa3.png', 'price': '₩400,000'},
-      {'name': '소파4', 'manufacturer': '제작사 N', 'image': 'assets/sofa4.png', 'price': '₩450,000'},
-      {'name': '소파5', 'manufacturer': '제작사 O', 'image': 'assets/sofa5.png', 'price': '₩500,000'},
-      {'name': '소파6', 'manufacturer': '제작사 P', 'image': 'assets/sofa6.png', 'price': '₩550,000'},
+      {'name': '소파1', 'manufacturer': '제작사 K', 'image': 'assets/sofa1.png', 'price': '₩300,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '소파2', 'manufacturer': '제작사 L', 'image': 'assets/sofa2.png', 'price': '₩350,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '소파3', 'manufacturer': '제작사 M', 'image': 'assets/sofa3.png', 'price': '₩400,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '소파4', 'manufacturer': '제작사 N', 'image': 'assets/sofa4.png', 'price': '₩450,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '소파5', 'manufacturer': '제작사 O', 'image': 'assets/sofa5.png', 'price': '₩500,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '소파6', 'manufacturer': '제작사 P', 'image': 'assets/sofa6.png', 'price': '₩550,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
     ],
     '침대': [
-      {'name': '침대1', 'manufacturer': '제작사 Q', 'image': 'assets/bed1.png', 'price': '₩500,000'},
-      {'name': '침대2', 'manufacturer': '제작사 R', 'image': 'assets/bed2.png', 'price': '₩450,000'},
-      {'name': '침대3', 'manufacturer': '제작사 S', 'image': 'assets/bed3.png', 'price': '₩600,000'},
-      {'name': '침대4', 'manufacturer': '제작사 T', 'image': 'assets/bed4.png', 'price': '₩550,000'},
+      {'name': '침대1', 'manufacturer': '제작사 Q', 'image': 'assets/bed1.png', 'price': '₩500,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '침대2', 'manufacturer': '제작사 R', 'image': 'assets/bed2.png', 'price': '₩450,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '침대3', 'manufacturer': '제작사 S', 'image': 'assets/bed3.png', 'price': '₩600,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '침대4', 'manufacturer': '제작사 T', 'image': 'assets/bed4.png', 'price': '₩550,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
     ],
     '식탁': [
-      {'name': '식탁1', 'manufacturer': '제작사 U', 'image': 'assets/table1.png', 'price': '₩400,000'},
-      {'name': '식탁2', 'manufacturer': '제작사 V', 'image': 'assets/table2.png', 'price': '₩420,000'},
-      {'name': '식탁3', 'manufacturer': '제작사 W', 'image': 'assets/table3.png', 'price': '₩450,000'},
-      {'name': '식탁4', 'manufacturer': '제작사 X', 'image': 'assets/table4.png', 'price': '₩480,000'},
-      {'name': '식탁5', 'manufacturer': '제작사 Y', 'image': 'assets/table5.png', 'price': '₩500,000'},
-      {'name': '식탁6', 'manufacturer': '제작사 Z', 'image': 'assets/table6.png', 'price': '₩530,000'},
+      {'name': '식탁1', 'manufacturer': '제작사 U', 'image': 'assets/table1.png', 'price': '₩400,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '식탁2', 'manufacturer': '제작사 V', 'image': 'assets/table2.png', 'price': '₩420,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '식탁3', 'manufacturer': '제작사 W', 'image': 'assets/table3.png', 'price': '₩450,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '식탁4', 'manufacturer': '제작사 X', 'image': 'assets/table4.png', 'price': '₩480,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '식탁5', 'manufacturer': '제작사 Y', 'image': 'assets/table5.png', 'price': '₩500,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
+      {'name': '식탁6', 'manufacturer': '제작사 Z', 'image': 'assets/table6.png', 'price': '₩530,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
     ],
   };
 String selectedCategory = '의자';
@@ -429,26 +429,32 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   bool isLiked = false;
   int likeCount = 41;
-  bool showAllReviews = false; // Toggle to show all reviews
+  bool showAllReviews = false;
 
   // Sample reviews
   final List<Map<String, dynamic>> reviews = [
     {
-      'user': 'User1',
-      'content': 'Great product! Really loved the quality and design.',
-      'rating': 4,
+      "user": "사용자1",
+      "content": "훌륭한 제품입니다! 품질과 디자인이 정말 마음에 들어요.",
+      "rating": 4
     },
     {
-      'user': 'User2',
-      'content': 'Good value for money. Would recommend it to others!',
-      'rating': 5,
+      "user": "사용자2",
+      "content": "가격 대비 좋은 가치입니다. 다른 사람에게 추천할 것입니다!",
+      "rating": 5
     },
     {
-      'user': 'User3',
-      'content': 'Decent quality, but the color is slightly different from the picture.',
-      'rating': 3,
+      "user": "사용자3",
+      "content": "괜찮은 품질이지만 색상이 사진과 약간 다릅니다.",
+      "rating": 3
     },
-  ];
+    {
+      "user": "사용자4",
+      "content": "배송이 빠르고 서비스가 좋았습니다. 매우 만족합니다!",
+      "rating": 5
+    }
+]
+;
 
   double get averageRating {
     if (reviews.isEmpty) return 0.0; // Handle case with no reviews
@@ -456,13 +462,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return totalRating / reviews.length;
   }
 
+  bool showDescription = true;
+  bool showReviews = false;
+  bool showInquiries = false;
+
+  String selectedInquiryType = '배송'; // 기본값
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
           widget.product['name']!,
-          style: const TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 18),
         ),
         backgroundColor: Colors.white,
         titleTextStyle: const TextStyle(color: Colors.black),
@@ -556,6 +570,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 style: const TextStyle(fontSize: 18, color: Colors.grey),
               ),
               const SizedBox(height: 30),
+
+              // Color selection section
               const Text(
                 '색깔',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -573,15 +589,208 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   _buildColorCircle(Colors.blue),
                 ],
               ),
-              const SizedBox(height: 45),
+              const SizedBox(height: 30),
 
-              // 리뷰
-              const Text(
-                '리뷰',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              // Category selection for Description, Reviews, Inquiries
+              Container(
+                color: const Color(0xFFF5F5F5),
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildCategoryButton('상품 정보', () {
+                      setState(() {
+                        showDescription = true;
+                        showReviews = false;
+                        showInquiries = false;
+                      });
+                    }, showDescription),
+                    _buildCategoryButton('리뷰', () {
+                      setState(() {
+                        showReviews = true;
+                        showDescription = false;
+                        showInquiries = false;
+                      });
+                    }, showReviews),
+                    _buildCategoryButton('문의', () {
+                      setState(() {
+                        showInquiries = true;
+                        showDescription = false;
+                        showReviews = false;
+                      });
+                    }, showInquiries),
+                  ],
+                ),
               ),
-              const SizedBox(height: 10),
 
+              const SizedBox(height: 30),
+
+              // Product Description Section
+              if (showDescription) ...[
+                const SizedBox(height: 10),
+                const Text('상품 정보', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
+                Text('상품 번호: ${widget.product['id']}', style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                const SizedBox(height: 10),
+                Text('상품 설명: ${widget.product['description']}', style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                const SizedBox(height: 40),
+                Image.asset('assets/adv_other.png'),
+              ],
+
+              // Inquiries Section
+              if (showInquiries) ...[
+                const SizedBox(height: 10),
+                const Text('문의', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 30),
+
+                // 문의 유형 선택
+                const Text(
+                  '문의 유형 (필수)',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                DropdownButton<String>(
+                  value: selectedInquiryType,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedInquiryType = newValue!;
+                    });
+                  },
+                  items: <String>['배송', '재입고', '상품상세문의', '기타']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+
+                // 제목 입력
+                const Text(
+                  '제목 (필수)',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: titleController, // Ensure this is the correct controller for the title
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                    labelText: '30자 내로 입력해주세요.',
+                    labelStyle: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // 내용 입력
+                const Text(
+                  '내용 (필수)',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: contentController,
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    labelText: '문의할 내용을 입력해주세요.',
+                    labelStyle: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // 사진 추가
+                const Text(
+                  '사진 추가',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                Image.asset(
+                  'assets/add_img.png', // Add your image here
+                  width: 70,
+                  height: 70,
+                  color: Colors.grey,
+                ),
+                const SizedBox(height: 30),
+
+                // 등록 버튼
+                ElevatedButton(
+                  onPressed: () {
+                    String title = titleController.text.trim();
+                    String content = contentController.text.trim();
+
+                    // 오류 메시지 변수
+                    String? errorMessage;
+
+                    // 제목과 내용 검증
+                    if (title.isEmpty) {
+                      errorMessage = '제목을 입력해주세요.';
+                    } else if (title.length > 30) {
+                      errorMessage = '제목은 30자 이내로 입력해주세요.';
+                    } else if (content.isEmpty) {
+                      errorMessage = '내용을 입력해주세요.';
+                    }
+
+                    // 오류 메시지가 있을 경우 SnackBar로 표시
+                    if (errorMessage != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(errorMessage)),
+                      );
+                    } else {
+                      // 등록 버튼 클릭 시 처리할 내용 추가
+                      // 예를 들어, 입력된 내용을 서버에 전송하는 등의 작업
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey, // Set the button color to grey
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // Rounded corners with a radius of 10
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20), // Padding of 5 pixels
+                  ),
+                  child: const Text(
+                    '등록',
+                    style: TextStyle(
+                      color: Colors.white, // Set the text color to white
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+              // Reviews Section
+              if (showReviews) ...[
+                const SizedBox(height: 10),
+                const Text('리뷰', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
               // Average Rating Section
               Row(
               children: [
@@ -608,64 +817,62 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
             const SizedBox(height: 20),
             
-              // Review Section
-              Column(
-                children: List.generate(
-                  showAllReviews ? reviews.length : 2,
-                  (index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Column( // Changed from Row to Column to accommodate the Divider
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/user.png',
-                              width: 24,
-                              height: 24,
-                              color: Colors.grey,
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    reviews[index]['user']!,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Row(
-                                    children: List.generate(5, (starIndex) {
-                                      return Icon(
-                                        Icons.star,
-                                        color: starIndex < reviews[index]['rating'] ? Colors.amber : Colors.grey,
-                                        size: 16,
-                                      );
-                                    }),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    reviews[index]['content']!,
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ],
+                Column(
+                  children: List.generate(
+                    showAllReviews ? reviews.length : 2,
+                    (index) => Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                'assets/user.png',
+                                width: 24,
+                                height: 24,
+                                color: Colors.grey,
                               ),
-                            ),
-                          ],
-                        ),
-                          const SizedBox(height: 20),
-                          const Divider(
-                            color: Color(0xFFE0E0E0),     // 선 색상
-                            thickness: 0.5,         // 선 두께
-                            indent: 16.0,           // 좌측 여백
-                            endIndent: 16.0,        // 우측 여백
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      reviews[index]['user']!,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 3),
+                                    Row(
+                                      children: List.generate(5, (starIndex) {
+                                        return Icon(
+                                          Icons.star,
+                                          color: starIndex < reviews[index]['rating'] ? Colors.amber : Colors.grey,
+                                          size: 16,
+                                        );
+                                      }),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      reviews[index]['content']!,
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          
+                        const SizedBox(height: 20),
+                        const Divider(
+                          color: Color(0xFFE0E0E0), // 선 색상
+                          thickness: 0.5,          // 선 두께
+                          indent: 16.0,            // 좌측 여백
+                          endIndent: 16.0,         // 우측 여백
+                        ),
                       ],
                     ),
                   ),
@@ -681,15 +888,37 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                     );
                   },
-                  child: const Text('리뷰 더보기'),
+                  child: const Text(
+                    '리뷰 더보기',
+                    style: TextStyle(
+                      color: Colors.green, // Set text color to green
+                    ),
+                  ),
                 ),
               const SizedBox(height: 20),
-              
+            ],
             ],
           ),
         ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+
+  Widget _buildCategoryButton(String title, VoidCallback onTap, bool isSelected) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            color: isSelected ? Colors.green : Colors.black,
+          ),
+        ),
+      ),
     );
   }
 
@@ -756,7 +985,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                 ),
                 child: const Text(
-                  '바로 구매',
+                  '구매하기',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
@@ -767,6 +996,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 }
+
 
 
 
@@ -801,44 +1031,70 @@ class ReviewPage extends StatelessWidget {
         titleTextStyle: const TextStyle(color: Colors.black),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: reviews.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'assets/user.png',
-                  width: 24,
-                  height: 24,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
+      body: Container(
+        color: Colors.white, // Set the body background color to white
+        child: ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: reviews.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        reviews[index]['user']!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                      Image.asset(
+                        'assets/user.png',
+                        width: 24,
+                        height: 24,
+                        color: Colors.grey,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        reviews[index]['content']!,
-                        style: const TextStyle(fontSize: 16),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              reviews[index]['user']!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Row(
+                              children: List.generate(5, (starIndex) {
+                                return Icon(
+                                  Icons.star,
+                                  color: starIndex < reviews[index]['rating'] ? Colors.amber : Colors.grey,
+                                  size: 16,
+                                );
+                              }),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              reviews[index]['content']!,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                  const SizedBox(height: 20),
+                  const Divider(
+                    color: Color(0xFFE0E0E0), // Line color
+                    thickness: 0.5,          // Line thickness
+                    indent: 16.0,            // Left margin
+                    endIndent: 16.0,         // Right margin
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
