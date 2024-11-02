@@ -264,8 +264,8 @@ void dispose() {
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200, // 항목의 최대 너비 설정
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
                       childAspectRatio: 3 / 4,
@@ -287,64 +287,65 @@ void dispose() {
                             color: const Color(0xFFF5F5F5),
                             borderRadius: BorderRadius.circular(12),
                           ),
+                          // 카드
                           child: Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Product Image
-                                Center(
-                                  child: Container(
-                                    width: 80,
-                                    height: 60,
-                                    child: Image.asset(
-                                      product['image']!,
-                                      fit: BoxFit.contain,
+                            padding: const EdgeInsets.symmetric(horizontal: 18.0), // 왼쪽, 오른쪽 8px 패딩 추가
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center, // 세로 중앙 배치
+                                crossAxisAlignment: CrossAxisAlignment.start, // 텍스트는 왼쪽 정렬
+                                children: [
+                                  // Product Image
+                                  Center(
+                                    child: Container(
+                                      width: 80,
+                                      height: 60,
+                                      child: Image.asset(
+                                        product['image']!,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 15), // Space between image and price
+                                  const SizedBox(height: 20), // 이미지와 가격 사이 간격
 
-                                // Product Details
-                                Text(
-                                  product['price']!,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                const SizedBox(height: 3), // Space below price
-                                Text(
-                                  product['name']!,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                const SizedBox(height: 3), // Space between name and manufacturer
-
-                                // Manufacturer and Heart Icon in the same row
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      product['manufacturer']!,
-                                      style: const TextStyle(fontSize: 12, color: Colors.grey),
-                                      textAlign: TextAlign.left,
+                                  // Product Details
+                                  Text(
+                                    product['price']!,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
-                                    Image.asset(
-                                      'assets/heart.png',
-                                      width: 16,
-                                      height: 16,
+                                  ),
+                                  const SizedBox(height: 3), // 가격 아래 간격
+                                  Text(
+                                    product['name']!,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.grey,
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  const SizedBox(height: 3), // 이름과 제조사 사이 간격
+
+                                  // Manufacturer and Heart Icon in the same row
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        product['manufacturer']!,
+                                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                      ),
+                                      Image.asset(
+                                        'assets/heart.png',
+                                        width: 16,
+                                        height: 16,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -416,7 +417,6 @@ class UserPage extends StatelessWidget {
 
 //**********기타 페이지**********//
 // 상품 페이지
-
 class ProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
 
@@ -427,9 +427,34 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  bool isLiked = false; // Track whether the heart is liked
-  int likeCount = 41; // Initial like count
-  int rating = 0; // Initial rating as an integer
+  bool isLiked = false;
+  int likeCount = 41;
+  bool showAllReviews = false; // Toggle to show all reviews
+
+  // Sample reviews
+  final List<Map<String, dynamic>> reviews = [
+    {
+      'user': 'User1',
+      'content': 'Great product! Really loved the quality and design.',
+      'rating': 4,
+    },
+    {
+      'user': 'User2',
+      'content': 'Good value for money. Would recommend it to others!',
+      'rating': 5,
+    },
+    {
+      'user': 'User3',
+      'content': 'Decent quality, but the color is slightly different from the picture.',
+      'rating': 3,
+    },
+  ];
+
+  double get averageRating {
+    if (reviews.isEmpty) return 0.0; // Handle case with no reviews
+    double totalRating = reviews.fold(0.0, (sum, review) => sum + review['rating']);
+    return totalRating / reviews.length;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -437,14 +462,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       appBar: AppBar(
         title: Text(
           widget.product['name']!,
-          style: const TextStyle(fontSize: 24), // Font size updated to 24
+          style: const TextStyle(fontSize: 24),
         ),
-        backgroundColor: Colors.white, // AppBar background color
-        titleTextStyle: const TextStyle(color: Colors.black), // Title color
-        iconTheme: const IconThemeData(color: Colors.black), // Icon color
+        backgroundColor: Colors.white,
+        titleTextStyle: const TextStyle(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      backgroundColor: Colors.white, // Set Scaffold background to white
-      body: SingleChildScrollView( // Make body scrollable
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
@@ -453,15 +478,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               Center(
                 child: Image.asset(
                   widget.product['image']!,
-                  width: 200, // Image size
-                  height: 200,
+                  width: 250,
+                  height: 250,
                 ),
               ),
-              const SizedBox(height: 20), // Space between image and turn image
+              const SizedBox(height: 20),
               Center(
                 child: ColorFiltered(
                   colorFilter: const ColorFilter.mode(
-                    Colors.grey, // Light gray color
+                    Colors.grey,
                     BlendMode.srcIn,
                   ),
                   child: Image.asset(
@@ -469,201 +494,280 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     width: 50,
                     height: 50,
                   ),
-                ), // Turn image above the divider
+                ),
               ),
-              const SizedBox(height: 20), // Space between turn image and divider
-              const Divider(thickness: 1, color: Colors.grey), // Divider below the turn image
-              const SizedBox(height: 20), // Space between divider and price
+              const SizedBox(height: 20),
+              const Divider(thickness: 0.5, color: Colors.grey),
+              const SizedBox(height: 20),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Aligns items in the row
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     widget.product['price']!,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   GestureDetector(
                     onTap: () {
                       setState(() {
                         if (isLiked) {
-                          likeCount--; // Decrement the count if already liked
+                          likeCount--;
                         } else {
-                          likeCount++; // Increment the count if not liked
+                          likeCount++;
                         }
-                        isLiked = !isLiked; // Toggle the like state
+                        isLiked = !isLiked;
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(isLiked ? '좋아요 추가됨' : '좋아요 취소됨'),
+                            behavior: SnackBarBehavior.floating,
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
                       });
                     },
                     child: Row(
                       children: [
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            isLiked ? Colors.red : Colors.grey.withOpacity(0.5), // Change color based on isLiked
+                            isLiked ? Colors.red : Colors.grey.withOpacity(0.5),
                             BlendMode.srcIn,
                           ),
                           child: Image.asset(
-                            'assets/heart.png', // Heart image
-                            width: 24, // Set width for the heart icon
-                            height: 24, // Set height for the heart icon
+                            'assets/heart.png',
+                            width: 24,
+                            height: 24,
                           ),
                         ),
-                        const SizedBox(width: 4), // Space between icon and text
-                        Text('$likeCount'), // Display the like count
+                        const SizedBox(width: 4),
+                        Text('$likeCount'),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8), // Space between price and product name
+              const SizedBox(height: 8),
               Text(
-                widget.product['name']!, // Product name above the manufacturer
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                widget.product['name']!,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 4), // Space between product name and manufacturer
+              const SizedBox(height: 4),
               Text(
                 widget.product['manufacturer']!,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey,
-                ),
+                style: const TextStyle(fontSize: 18, color: Colors.grey),
               ),
-              const SizedBox(height: 20), // Increased space before color label
-              const SizedBox(height: 16), // Additional space above "색깔"
+              const SizedBox(height: 30),
               const Text(
                 '색깔',
-                style: TextStyle(
-                  fontSize: 18, // Size for color label
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20), // Space between color label and color circles
+              const SizedBox(height: 20),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start, // Align circles to the start
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   _buildColorCircle(Colors.black),
-                  const SizedBox(width: 16), // Space between circles
+                  const SizedBox(width: 16),
                   _buildColorCircle(Colors.white),
-                  const SizedBox(width: 16), // Space between circles
+                  const SizedBox(width: 16),
                   _buildColorCircle(Colors.green),
-                  const SizedBox(width: 16), // Space between circles
+                  const SizedBox(width: 16),
                   _buildColorCircle(Colors.blue),
                 ],
               ),
-              const SizedBox(height: 20), // Padding below the color circles
-              
-              // Review Section
+              const SizedBox(height: 45),
+
+              // 리뷰
               const Text(
                 '리뷰',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10), // Space between review title and rating bar
+              const SizedBox(height: 10),
+
+              // Average Rating Section
               Row(
-                children: List.generate(5, (index) {
-                  return IconButton(
-                    icon: Icon(
-                      Icons.star,
-                      color: index < rating ? Colors.amber : Colors.grey,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        rating = index + 1; // Update the rating based on the star clicked
-                      });
-                    },
+              children: [
+                ...List.generate(5, (index) {
+                  return Icon(
+                    Icons.star,
+                    color: index < averageRating ? Colors.amber : Colors.grey,
+                    size: 25,
                   );
                 }),
+                const SizedBox(width: 8), // Adds spacing between stars and the text
+                Text(
+                  '${averageRating.toStringAsFixed(1)}', // Display average rating text
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            const Divider(
+              color: Color(0xFFE0E0E0),     // 선 색상
+              thickness: 1.2,         // 선 두께
+              indent: 0.0,           // 좌측 여백
+              endIndent: 0.0,        // 우측 여백
+            ),
+            const SizedBox(height: 20),
+            
+              // Review Section
+              Column(
+                children: List.generate(
+                  showAllReviews ? reviews.length : 2,
+                  (index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Column( // Changed from Row to Column to accommodate the Divider
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              'assets/user.png',
+                              width: 24,
+                              height: 24,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    reviews[index]['user']!,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: List.generate(5, (starIndex) {
+                                      return Icon(
+                                        Icons.star,
+                                        color: starIndex < reviews[index]['rating'] ? Colors.amber : Colors.grey,
+                                        size: 16,
+                                      );
+                                    }),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    reviews[index]['content']!,
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                          const SizedBox(height: 20),
+                          const Divider(
+                            color: Color(0xFFE0E0E0),     // 선 색상
+                            thickness: 0.5,         // 선 두께
+                            indent: 16.0,           // 좌측 여백
+                            endIndent: 16.0,        // 우측 여백
+                          ),
+                          
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              const SizedBox(height: 20), // Space after the rating bar
+              if (reviews.length > 2)
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReviewPage(reviews: reviews),
+                      ),
+                    );
+                  },
+                  child: const Text('리뷰 더보기'),
+                ),
+              const SizedBox(height: 20),
+              
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white, // Background color of the navigation bar
-          border: Border(
-            top: BorderSide(
-              color: Colors.grey.withOpacity(0.3), // Light gray border
-              width: 1, // Border width
-            ),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align buttons to the sides
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0), // Add padding around the button
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Add your action here for the cart
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // White background for the cart button
-                    side: const BorderSide(color: Colors.green, width: 2), // Green border
-                    shape: RoundedRectangleBorder( // Set shape to rectangular with rounded corners
-                      borderRadius: BorderRadius.circular(10), // Set border radius to 10
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 20), // Increased vertical padding
-                  ),
-                  child: const Text(
-                    '장바구니',
-                    style: TextStyle(
-                      color: Colors.green, // Green text color
-                      fontSize: 18, // Text size
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0), // Add padding around the button
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Add your action here for buy now
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, // Background color for the buy button
-                    shape: RoundedRectangleBorder( // Set shape to rectangular with rounded corners
-                      borderRadius: BorderRadius.circular(10), // Set border radius to 10
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 20), // Increased vertical padding
-                  ),
-                  child: const Text(
-                    '바로 구매',
-                    style: TextStyle(
-                      color: Colors.white, // Text color
-                      fontSize: 18, // Text size
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  Widget _buildColorCircle(Color color) {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.grey, width: 1),
       ),
     );
   }
 
-  // Helper method to create a colored circle
-  Widget _buildColorCircle(Color color) {
+  Widget _buildBottomNavigationBar() {
     return Container(
-      width: 24, // Width of the circle
-      height: 24, // Height of the circle
       decoration: BoxDecoration(
-        color: color, // Circle color
-        shape: BoxShape.circle, // Make it circular
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey.withOpacity(0.3),
+            width: 1,
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Cart action
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  side: const BorderSide(color: Colors.green, width: 2),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                ),
+                child: const Text(
+                  '장바구니',
+                  style: TextStyle(color: Colors.green, fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Buy action
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                ),
+                child: const Text(
+                  '바로 구매',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
 
 
 // 채팅 페이지
@@ -682,6 +786,63 @@ class ChatPage extends StatelessWidget {
   }
 }
 
+//리뷰 페이지
+class ReviewPage extends StatelessWidget {
+  final List<Map<String, dynamic>> reviews;
+
+  const ReviewPage({Key? key, required this.reviews}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('리뷰'),
+        backgroundColor: Colors.white,
+        titleTextStyle: const TextStyle(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: reviews.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(
+                  'assets/user.png',
+                  width: 24,
+                  height: 24,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        reviews[index]['user']!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        reviews[index]['content']!,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
 
 
 //**********상단 바 디자인**********//
@@ -753,7 +914,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(57.0);
 }
-
 
 
 
