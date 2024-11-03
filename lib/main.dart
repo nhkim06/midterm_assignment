@@ -1812,19 +1812,19 @@ class UserChat extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.green.shade100, // Background color for user message
-            borderRadius: BorderRadius.circular(20), // Rounded corners
+            color: Colors.green.shade100,
+            borderRadius: BorderRadius.circular(20), 
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Padding inside the container
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), 
           child: Text(
             message,
             style: const TextStyle(
-              fontSize: 16, // Font size for the text
-              color: Colors.black, // Text color
+              fontSize: 16, 
+              color: Colors.black, 
             ),
           ),
         ),
-        const SizedBox(width: 8), // Spacing between message and avatar
+        const SizedBox(width: 8), 
       ],
     );
   }
@@ -1841,28 +1841,28 @@ class ChatbotChat extends StatelessWidget {
     return Row(
       children: [
         CircleAvatar(
-          radius: 24, // Set the radius of the circle
-          backgroundColor: const Color(0xFFD5FDC1), // Set background color of the avatar
+          radius: 24, 
+          backgroundColor: const Color(0xFFD5FDC1), 
           child: Image.asset(
             'assets/chatbot.png',
-            color: const Color(0xFF529147), // Apply light green color to the icon
+            color: const Color(0xFF529147),
             height: 24,
             width: 24,
           ),
         ),
-        const SizedBox(width: 8), // Spacing between avatar and text
+        const SizedBox(width: 8), 
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Padding inside the container
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), 
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20), // Rounded corners
-            border: Border.all(color: Colors.grey), // Optional border
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.grey), 
           ),
           child: Text(
             message,
             style: const TextStyle(
-              fontSize: 16, // Font size for the text
-              color: Colors.black, // Text color
+              fontSize: 16, 
+              color: Colors.black, 
             ),
           ),
         ),
@@ -1915,11 +1915,11 @@ class ChatbotRecommendChat extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Display product images with border
-            const SizedBox(width: 58), // Increase spacing between images
+            const SizedBox(width: 58), 
             _buildImageContainer('assets/desk2.png'),
-            const SizedBox(width: 8), // Increase spacing between images
+            const SizedBox(width: 8),
             _buildImageContainer('assets/sofa3.png'),
-            const SizedBox(width: 8), // Increase spacing between images
+            const SizedBox(width: 8), 
             _buildImageContainer('assets/table2.png'),
           ],
         ),
@@ -1930,16 +1930,16 @@ class ChatbotRecommendChat extends StatelessWidget {
   Widget _buildImageContainer(String imagePath) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey), // Border color
-        borderRadius: BorderRadius.circular(8), // Rounded corners for the border
+        border: Border.all(color: Colors.grey), 
+        borderRadius: BorderRadius.circular(8), 
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8), // Ensure image corners are rounded
+        borderRadius: BorderRadius.circular(8), 
         child: Image.asset(
           imagePath,
           width: 60,
           height: 60,
-          fit: BoxFit.cover, // Ensures the image covers the container
+          fit: BoxFit.cover,  
         ),
       ),
     );
