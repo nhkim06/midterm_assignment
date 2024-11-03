@@ -22,8 +22,37 @@ class MyApp extends StatelessWidget {
 
 //**********상단 페이지**********//
 // 검색 페이지
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
+
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  final TextEditingController _searchController = TextEditingController();
+  final List<String> _allItems = [
+    "Apple", "Banana", "Orange", "Grapes", "Pineapple", "Mango"
+  ]; // 예시 데이터
+  List<String> _filteredItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredItems = _allItems; // 초기 상태는 모든 항목 표시
+  }
+
+  void _filterItems(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredItems = _allItems;
+      } else {
+        _filteredItems = _allItems
+            .where((item) => item.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +66,47 @@ class SearchPage extends StatelessWidget {
             ),
           ),
           child: AppBar(
-            title: const Text('검색'),
+            title: const Text('검색', style: TextStyle(color: Colors.black)),
             backgroundColor: Colors.white,
+            iconTheme: const IconThemeData(color: Colors.black), // 아이콘 색상 변경
           ),
         ),
       ),
-      body: Center(child: const Text('검색 페이지 내용')),
-      floatingActionButton: const ChatFloatingActionButton(), // Use custom button here
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _searchController,
+              decoration: const InputDecoration(
+                hintText: '검색어를 입력하세요',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.search),
+              ),
+              onChanged: _filterItems,
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: _filteredItems.isEmpty
+                  ? const Center(child: Text('검색 결과가 없습니다.'))
+                  : ListView.builder(
+                      itemCount: _filteredItems.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(_filteredItems[index]),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: const ChatFloatingActionButton(), // 커스텀 버튼
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
+
 
 // 장바구니 페이지
 class CartPage extends StatelessWidget {
@@ -55,13 +114,34 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, String>> cartItems = [
+      {
+        'image': 'assets/chair1.png',
+        'name': '의자1',
+        'manufacturer': '제작사 A',
+        'price': '₩100,000',
+      },
+      {
+        'image': 'assets/desk3.png',
+        'name': '책상3',
+        'manufacturer': '제작사 I',
+        'price': '₩250,000',
+      },
+      {
+        'image': 'assets/sofa1.png',
+        'name': '소파1',
+        'manufacturer': '제작사 K',
+        'price': '₩300,000',
+      },
+    ];
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Container(
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: Colors.grey[300]!, width: 1), // 연한 회색 보더
+              bottom: BorderSide(color: Colors.grey[300]!, width: 1),
             ),
           ),
           child: AppBar(
@@ -70,7 +150,27 @@ class CartPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(child: const Text('장바구니 페이지 내용')),
+      body: cartItems.isEmpty
+          ? const Center(child: Text('장바구니가 비어 있습니다.'))
+          : ListView.builder(
+              itemCount: cartItems.length,
+              itemBuilder: (context, index) {
+                final item = cartItems[index];
+                return Card(
+                  child: ListTile(
+                    leading: Image.asset(item['image'] ?? ''),
+                    title: Text(item['name'] ?? ''),
+                    subtitle: Text('${item['manufacturer']} - ${item['price']}'),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        // 삭제 기능 추가
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
     );
   }
 }
@@ -369,14 +469,34 @@ void dispose() {
 class StorePage extends StatelessWidget {
   const StorePage({Key? key}) : super(key: key);
 
-  @override
+   @override
   Widget build(BuildContext context) {
+    // Sample manufacturers
+    final List<String> manufacturers = [
+      '제조사 1',
+      '제조사 2',
+      '제조사 3',
+      '제조사 4',
+      '제조사 5',
+    ];
+
     return Scaffold(
-      appBar: CustomAppBar(title: '스토어', context: context, isHomePage: false), // 볼드체 아님
-      body: Center(child: const Text('스토어 페이지 내용')),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 1),
-      floatingActionButton: const ChatFloatingActionButton(), // 추가된 부분
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // 위치 설정
+      appBar: CustomAppBar(title: '스토어', context: context, isHomePage: false),
+      body: ListView.builder(
+        itemCount: manufacturers.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(manufacturers[index]),
+            onTap: () {
+              // Handle manufacturer selection
+              Navigator.pop(context, manufacturers[index]);
+            },
+          );
+        },
+      ),
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2),
+      floatingActionButton: const ChatFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
@@ -387,32 +507,107 @@ class HeartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Sample list of liked items
+    final List<String> likedItems = [
+      '아이템 1',
+      '아이템 2',
+      '아이템 3',
+      '아이템 4',
+      '아이템 5',
+    ];
+
     return Scaffold(
       appBar: CustomAppBar(title: '좋아요', context: context, isHomePage: false), // 볼드체 아님
-      body: Center(child: const Text('하트 페이지 내용')),
+      body: likedItems.isEmpty
+          ? const Center(child: Text('좋아하는 아이템이 없습니다.')) // No items message
+          : ListView.builder(
+              itemCount: likedItems.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(likedItems[index]),
+                     trailing: IconButton(
+                      icon: ColorFiltered(
+                        colorFilter: const ColorFilter.mode(
+                          Colors.red, 
+                          BlendMode.srcIn, // Use srcIn to apply the color to the image
+                        ),
+                        child: Image.asset(
+                          'assets/heart.png', // Ensure the correct path to your image asset
+                          width: 24,
+                          height: 24,
+                        ),
+                      ),
+                      onPressed: () {
+                        // Handle removal of liked item
+                        // You can implement the logic to remove the item from the list here
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
       bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2),
-      floatingActionButton: const ChatFloatingActionButton(), // 추가된 부분
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // 위치 설정
+      floatingActionButton: const ChatFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
 
-// 유저 페이지
+
+// 마이 페이지
 class UserPage extends StatelessWidget {
   const UserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '마이페이지', context: context, isHomePage: false), // 볼드체 아님
-      body: Center(child: const Text('사용자 페이지 내용')),
+      appBar: CustomAppBar(title: '마이페이지', context: context, isHomePage: false),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '사용자 정보',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            // User Profile Picture
+            Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage('https://example.com/user_profile.jpg'), // Replace with your user image URL
+              ),
+            ),
+            const SizedBox(height: 16),
+            // User Details
+            const Text('이름: 홍길동', style: TextStyle(fontSize: 18)),
+            const Text('이메일: hong@example.com', style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 20),
+            // Action Buttons
+            ElevatedButton(
+              onPressed: () {
+                // Implement edit profile functionality
+              },
+              child: const Text('프로필 수정'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                // Implement logout functionality
+              },
+              child: const Text('로그아웃'),
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 3),
-      floatingActionButton: const ChatFloatingActionButton(), // 추가된 부분
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // 위치 설정
+      floatingActionButton: const ChatFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
-
 
 
 //**********기타 페이지**********//
@@ -1015,6 +1210,7 @@ class ChatPage extends StatelessWidget {
     );
   }
 }
+
 
 //리뷰 페이지
 class ReviewPage extends StatelessWidget {
