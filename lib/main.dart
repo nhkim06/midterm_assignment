@@ -1201,15 +1201,105 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController messageController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('채팅'),
-        backgroundColor: Colors.white,
+        title: const Text(
+          '채팅',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Center(child: const Text('채팅 페이지 내용')),
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.all(8.0),
+                children: [
+                  const ChatbotChat(message: '어떤 상품을 찾으세요?'), // Chatbot message
+                  const SizedBox(height: 8), // Spacing between messages
+                  const UserChat(message: '심플하면서 화려한 가구 추천해줘'), // User message
+                  const SizedBox(height: 8), // Spacing between messages
+                  const ChatbotRecommendChat(),
+                  const SizedBox(height: 8), // Spacing between messages
+                  // Additional messages can be added here
+                ],
+              ),
+            ),
+            // Container with border above the input field
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
+                ),
+              ),
+            ),
+            // Message Input Field at the bottom
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: messageController,
+                      decoration: InputDecoration(
+                        hintText: '메시지를 입력하세요...',
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: BorderSide(color: Colors.green, width: 2.0),
+                        ),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 16.0, right: 10.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.white,
+                                builder: (BuildContext context) {
+                                  return const VoiceRecordBottomSheet();
+                                },
+                              );
+                            },
+                            child: Image.asset(
+                              'assets/mic.png',
+                              width: 20,
+                              height: 20,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    icon: const Icon(Icons.send, color: Colors.green),
+                    onPressed: () {
+                      print('Sent message: ${messageController.text}');
+                      messageController.clear();
+                      // Update your chat messages here as needed
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
+
+
 
 
 //리뷰 페이지
@@ -1297,6 +1387,7 @@ class ReviewPage extends StatelessWidget {
 }
 
 
+
 //**********상단 바 디자인**********//
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -1366,7 +1457,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(57.0);
 }
-
 
 
 //**********하단 바 디자인**********//
@@ -1454,26 +1544,265 @@ class BottomNavigationBarWidget extends StatelessWidget {
 }
 
 
-
 //**********채팅 플로팅 버튼**********//
 class ChatFloatingActionButton extends StatelessWidget {
   const ChatFloatingActionButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ChatPage()),
-        );
-      },
-      backgroundColor: const Color(0xFFD5FDC1), // 연두색
-      child: Image.asset(
-        'assets/chatbot.png',
-        color: const Color(0xFF529147), // Apply green color to the icon
-        height: 24,
-        width: 24,    
+    return Tooltip(
+      message: 'AI와 대화하여 추천 상품을 확인해보세요.', // Tooltip message
+      child: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ChatPage()),
+          );
+        },
+        backgroundColor: const Color(0xFFD5FDC1), // Light green
+        child: Image.asset(
+          'assets/chatbot.png',
+          color: const Color(0xFF529147), // Apply green color to the icon
+          height: 24,
+          width: 24,    
+        ),
+      ),
+    );
+  }
+}
+
+
+//**********채팅**********//
+//유저 채팅
+class UserChat extends StatelessWidget {
+  final String message;
+
+  const UserChat({Key? key, required this.message}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.green.shade100, // Background color for user message
+            borderRadius: BorderRadius.circular(20), // Rounded corners
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Padding inside the container
+          child: Text(
+            message,
+            style: const TextStyle(
+              fontSize: 16, // Font size for the text
+              color: Colors.black, // Text color
+            ),
+          ),
+        ),
+        const SizedBox(width: 8), // Spacing between message and avatar
+      ],
+    );
+  }
+}
+
+
+//챗봇 채팅
+class ChatbotChat extends StatelessWidget {
+  final String message;
+
+  const ChatbotChat({Key? key, required this.message}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 24, // Set the radius of the circle
+          backgroundColor: const Color(0xFFD5FDC1), // Set background color of the avatar
+          child: Image.asset(
+            'assets/chatbot.png',
+            color: const Color(0xFF529147), // Apply light green color to the icon
+            height: 24,
+            width: 24,
+          ),
+        ),
+        const SizedBox(width: 8), // Spacing between avatar and text
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Padding inside the container
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20), // Rounded corners
+            border: Border.all(color: Colors.grey), // Optional border
+          ),
+          child: Text(
+            message,
+            style: const TextStyle(
+              fontSize: 16, // Font size for the text
+              color: Colors.black, // Text color
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+//챗봇 가구 추천
+class ChatbotRecommendChat extends StatelessWidget {
+  const ChatbotRecommendChat({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: const Color(0xFFD5FDC1),
+              child: Image.asset(
+                'assets/chatbot.png',
+                color: const Color(0xFF529147),
+                height: 24,
+                width: 24,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: const Text(
+                '말씀하신 내용의 상품 추천드립니다.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // Display product images with border
+            const SizedBox(width: 58), // Increase spacing between images
+            _buildImageContainer('assets/desk2.png'),
+            const SizedBox(width: 8), // Increase spacing between images
+            _buildImageContainer('assets/sofa3.png'),
+            const SizedBox(width: 8), // Increase spacing between images
+            _buildImageContainer('assets/table2.png'),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImageContainer(String imagePath) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey), // Border color
+        borderRadius: BorderRadius.circular(8), // Rounded corners for the border
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8), // Ensure image corners are rounded
+        child: Image.asset(
+          imagePath,
+          width: 60,
+          height: 60,
+          fit: BoxFit.cover, // Ensures the image covers the container
+        ),
+      ),
+    );
+  }
+}
+
+
+
+//**********음성 인식**********//
+class VoiceRecordBottomSheet extends StatelessWidget {
+  const VoiceRecordBottomSheet({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(50.0)), // Round top corners
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        height: 300, // Set the height of the bottom sheet
+        color: Colors.white, // Set the background color of the bottom sheet
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch, // Align content to stretch full width
+          children: [
+            // Close button at the top right
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.grey), // Close button icon
+                onPressed: () {
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+              ),
+            ),
+            const SizedBox(height: 20.0), // Spacing between the close button and mic icon
+            // Mic icon in the center
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  // Implement recording functionality
+                },
+                child: Image.asset(
+                  'assets/mic.png', // Make sure to place your mic.png in the 'assets' folder
+                  width: 50, // Set the width of the mic icon
+                  height: 50, // Set the height of the mic icon
+                  color: Colors.green, // Set the color of the icon (for grayscale)
+                ),
+              ),
+            ),
+            const SizedBox(height: 20.0), // Spacing between the mic icon and progress indicator
+            // Linear progress indicator at the bottom
+            const LinearProgressIndicator(
+              color: Colors.green, // Set the color of the progress indicator to green
+            ),
+            const SizedBox(height: 8.0), // Spacing between the progress indicator and text
+            // Text below the progress indicator
+            const Center(
+              child: Text(
+                '듣는 중...',
+                style: TextStyle(
+                  color: Colors.black, // Set the text color
+                  fontSize: 16.0, // Set the text size
+                ),
+              ),
+            ),
+            const Spacer(), // This will push the bottom navigation bar to the bottom
+            // Bottom navigation bar with the Complete button
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Implement completion functionality
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green, // Set button color
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 30.0), // Button padding
+                ),
+                child: const Text(
+                  '완료',
+                  style: TextStyle(
+                    color: Colors.white, // Set text color of the button
+                    fontSize: 16.0, // Set text size of the button
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
