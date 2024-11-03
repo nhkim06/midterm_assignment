@@ -1210,12 +1210,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 const SizedBox(height: 20),
               ],
-              // Reviews Section
+              // 리뷰
               if (showReviews) ...[
                 const SizedBox(height: 10),
                 const Text('리뷰', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
-              // Average Rating Section
+              // 평균
               Row(
               children: [
                 ...List.generate(5, (index) {
@@ -1225,19 +1225,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     size: 25,
                   );
                 }),
-                const SizedBox(width: 8), // Adds spacing between stars and the text
+                const SizedBox(width: 8), 
                 Text(
-                  '${averageRating.toStringAsFixed(1)}', // Display average rating text
+                  '${averageRating.toStringAsFixed(1)}',
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
             const SizedBox(height: 20),
             const Divider(
-              color: Color(0xFFE0E0E0),     // 선 색상
-              thickness: 1.2,         // 선 두께
-              indent: 0.0,           // 좌측 여백
-              endIndent: 0.0,        // 우측 여백
+              color: Color(0xFFE0E0E0),  
+              thickness: 1.2,        
+              indent: 0.0,           
+              endIndent: 0.0,        
             ),
             const SizedBox(height: 20),
             
@@ -1292,10 +1292,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           ),
                         const SizedBox(height: 20),
                         const Divider(
-                          color: Color(0xFFE0E0E0), // 선 색상
-                          thickness: 0.5,          // 선 두께
-                          indent: 16.0,            // 좌측 여백
-                          endIndent: 16.0,         // 우측 여백
+                          color: Color(0xFFE0E0E0),
+                          thickness: 0.5,         
+                          indent: 16.0,           
+                          endIndent: 16.0,         
                         ),
                       ],
                     ),
@@ -1315,7 +1315,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   child: const Text(
                     '리뷰 더보기',
                     style: TextStyle(
-                      color: Colors.green, // Set text color to green
+                      color: Colors.green, 
                     ),
                   ),
                 ),
