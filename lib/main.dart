@@ -1409,39 +1409,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 }
 
 
-// 상품 확대 (완)
-class ProductZoom extends StatelessWidget {
-  final String imagePath;
-
-  // Constructor to receive the image path
-  const ProductZoom({Key? key, required this.imagePath}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Product Zoom'),
-        backgroundColor: Colors.blue, // Customize your AppBar color
-      ),
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            // Optional: Close the zoom view on tap
-            Navigator.of(context).pop();
-          },
-          child: Image.asset(
-            imagePath,
-            fit: BoxFit.contain, // Adjust how the image fits in the space
-            width: double.infinity, // Make image take full width
-            height: double.infinity, // Make image take full height
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
 // 챗봇 페이지 (완)
 class ChatbotPage extends StatelessWidget {
   const ChatbotPage({Key? key}) : super(key: key);
