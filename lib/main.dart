@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
 
 //**********상단 페이지**********//
 //검색 페이지 (완)
-
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -61,7 +60,7 @@ class _SearchPageState extends State<SearchPage> {
     },
   ];
   
-  final List<String> _searchRanking = ['상품 A', '상품 B', '상품 C']; // 예시 데이터
+  final List<String> _searchRanking = ['상품 A', '상품 B', '상품 C']; 
 
 
   @override
@@ -108,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           child: AppBar(
             title: const Text('검색', style: TextStyle(color: Colors.black)),
-            backgroundColor: Colors.grey[200], // Change the app bar color to gray
+            backgroundColor: Colors.grey[200],
             iconTheme: const IconThemeData(color: Colors.black),
           ),
         ),
@@ -121,6 +120,7 @@ class _SearchPageState extends State<SearchPage> {
             Row(
               children: [
                 Expanded(
+                  // 검색창
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
@@ -134,11 +134,11 @@ class _SearchPageState extends State<SearchPage> {
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide(color: Colors.green, width: 2.0),
                       ),
+                      // 마이크 아이콘
                       prefixIcon: Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 10.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Execute your VoiceRecordBottomSheet here
                             showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
@@ -147,10 +147,10 @@ class _SearchPageState extends State<SearchPage> {
                             );
                           },
                           child: Image.asset(
-                            'assets/mic.png', // Change icon to mic.png
+                            'assets/mic.png', 
                             width: 20,
                             height: 20,
-                            color: Colors.grey, // Keep the icon color
+                            color: Colors.grey,
                           ),
                         ),
                       ),
@@ -158,7 +158,7 @@ class _SearchPageState extends State<SearchPage> {
                     onChanged: _filterItems,
                   ),
                 ),
-
+                // 검색 아이콘
                 const SizedBox(width: 8),
                 IconButton(
                   icon: const Icon(Icons.search, color: Colors.black, size: 28),
@@ -176,6 +176,8 @@ class _SearchPageState extends State<SearchPage> {
               height: 20,
             ),
             const SizedBox(height: 10),
+
+            // 검색 기록
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -198,11 +200,11 @@ class _SearchPageState extends State<SearchPage> {
             ),
             const SizedBox(height: 32),
 
-            // 검색 랭킹을 위한 리스트 추가
+            // 검색 랭킹
             Container(
-              alignment: Alignment.centerLeft, // Left align
+              alignment: Alignment.centerLeft, 
               child: const Text(
-                '검색 랭킹', // 검색 랭킹 텍스트
+                '검색 랭킹',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -212,33 +214,34 @@ class _SearchPageState extends State<SearchPage> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              height: 100, // 원하는 높이 설정
+              height: 100,
               child: ListView.builder(
-                itemCount: _searchRanking.length, // 랭킹 개수
+                itemCount: _searchRanking.length, 
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0), // 아이템 간격
+                    padding: const EdgeInsets.symmetric(vertical: 4.0), 
                     child: Text(
-                      '${index + 1}. ${_searchRanking[index]}', // 번호 매기기
+                      '${index + 1}. ${_searchRanking[index]}', 
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.black, // 텍스트 색상
+                        color: Colors.black, 
                       ),
                     ),
                   );
                 },
               ),
             ),
+            const SizedBox(height: 32),
 
-            const SizedBox(height: 32), // Space before recommended products
+            // 추천 상품 
             Container(
-              alignment: Alignment.centerLeft, // Left align
+              alignment: Alignment.centerLeft,
               child: const Text(
-                '추천상품', // 추천상품 텍스트
+                '추천상품', 
                 style: TextStyle(
-                  fontSize: 16, // 폰트 크기
-                  fontWeight: FontWeight.bold, // 굵게
-                  color: Colors.black, // 텍스트 색상
+                  fontSize: 16, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, 
                 ),
               ),
             ),
@@ -498,8 +501,9 @@ void dispose() {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // 광고 이미지
             Stack(
-              alignment: Alignment.center, // Centering both buttons horizontally
+              alignment: Alignment.center,
               children: [
                 Image.asset(
                   currentImage,
@@ -507,35 +511,36 @@ void dispose() {
                   fit: BoxFit.cover,
                 ),
                 Positioned(
-                  left: 16, // Adjust left position for the prev button
+                  left: 16, 
                   child: Opacity(
-                    opacity: 0.5, // Set transparency to 70%
+                    opacity: 0.5,
                     child: GestureDetector(
-                      onTap: _showPrevImage, // Call method to show the previous image
+                      onTap: _showPrevImage,
                       child: Image.asset(
-                        'assets/prev.png', // Path to your PNG button image for previous
-                        width: 35, // Set width to 50
-                        height: 35, // Set height to 50
+                        'assets/prev.png', 
+                        width: 35,
+                        height: 35,
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                  right: 16, // Adjust right position for the next button
+                  right: 16, 
                   child: Opacity(
-                    opacity: 0.5, // Set transparency to 70%
+                    opacity: 0.5, 
                     child: GestureDetector(
-                      onTap: _showNextImage, // Call method to show the next image
+                      onTap: _showNextImage, 
                       child: Image.asset(
-                        'assets/next.png', // Path to your PNG button image for next
-                        width: 35, // Set width to 50
-                        height: 35, // Set height to 50
+                        'assets/next.png',
+                        width: 35,
+                        height: 35, 
                       ),
                     ),
                   ),
                 ),
               ],
             ),
+            // 카테고리
             Container(
               color: Color(0xFFF5F5F5),
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -562,25 +567,27 @@ void dispose() {
                 }).toList(),
               ),
             ),
+            // 추천 상품 텍스트 
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    '추천상품', // 추천상품 텍스트
+                    '추천상품',
                     style: TextStyle(
-                      fontSize: 16, // 폰트 크기
-                      fontWeight: FontWeight.bold, // 굵게
-                      color: Colors.black, // 텍스트 색상
+                      fontSize: 16, 
+                      fontWeight: FontWeight.bold, 
+                      color: Colors.black, 
                     ),
                   ),
-                  const SizedBox(height: 16), // 추천상품과 그리드 사이의 간격
+                  const SizedBox(height: 16),
+                  // 상품
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200, // 항목의 최대 너비 설정
+                      maxCrossAxisExtent: 200, 
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
                       childAspectRatio: 3 / 4,
@@ -604,13 +611,13 @@ void dispose() {
                           ),
                           // 카드
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18.0), // 왼쪽, 오른쪽 8px 패딩 추가
+                            padding: const EdgeInsets.symmetric(horizontal: 18.0), 
                             child: Center(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center, // 세로 중앙 배치
-                                crossAxisAlignment: CrossAxisAlignment.start, // 텍스트는 왼쪽 정렬
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Product Image
+                                  // 상품 이미지
                                   Center(
                                     child: Container(
                                       width: 80,
@@ -621,9 +628,9 @@ void dispose() {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 20), // 이미지와 가격 사이 간격
+                                  const SizedBox(height: 20), 
 
-                                  // Product Details
+                                  // 상품 내용
                                   Text(
                                     product['price']!,
                                     style: const TextStyle(
@@ -632,7 +639,7 @@ void dispose() {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  const SizedBox(height: 3), // 가격 아래 간격
+                                  const SizedBox(height: 3),
                                   Text(
                                     product['name']!,
                                     style: const TextStyle(
@@ -641,9 +648,7 @@ void dispose() {
                                       color: Colors.grey,
                                     ),
                                   ),
-                                  const SizedBox(height: 3), // 이름과 제조사 사이 간격
-
-                                  // Manufacturer and Heart Icon in the same row
+                                  const SizedBox(height: 3), 
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -876,7 +881,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   bool showReviews = false;
   bool showInquiries = false;
 
-  String selectedInquiryType = '배송'; // 기본값
+  String selectedInquiryType = '배송'; 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
@@ -899,6 +904,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // 상품 이미지
               Center(
                 child: Image.asset(
                   widget.product['image']!,
@@ -907,6 +913,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
               const SizedBox(height: 20),
+              // 화살표 아이콘
               Center(
                 child: ColorFiltered(
                   colorFilter: const ColorFilter.mode(
@@ -924,13 +931,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               const SizedBox(height: 20),
               const Divider(thickness: 0.5, color: Colors.grey),
               const SizedBox(height: 20),
+              // 상품 기본 정보
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // 가격 표시
                   Text(
                     widget.product['price']!,
                     style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
+                  // 좋아요
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -971,6 +981,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ],
               ),
               const SizedBox(height: 8),
+              // 상품 이름과 제조사
               Text(
                 widget.product['name']!,
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -982,7 +993,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               const SizedBox(height: 30),
 
-              // Color selection section
+              // 색깔
               const Text(
                 '색깔',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -1002,7 +1013,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               const SizedBox(height: 30),
 
-              // Category selection for Description, Reviews, Inquiries
+              // 카테고리
               Container(
                 color: const Color(0xFFF5F5F5),
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1036,7 +1047,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
               const SizedBox(height: 30),
 
-              // Product Description Section
+              // 상품 정보
               if (showDescription) ...[
                 const SizedBox(height: 10),
                 const Text('상품 정보', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -1048,7 +1059,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 Image.asset('assets/adv_other.png'),
               ],
 
-              // Inquiries Section
+              // 문의 유형
               if (showInquiries) ...[
                 const SizedBox(height: 10),
                 const Text('문의', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -1171,27 +1182,29 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       errorMessage = '내용을 입력해주세요.';
                     }
 
-                    // 오류 메시지가 있을 경우 SnackBar로 표시
+                    // SnackBar 표시
                     if (errorMessage != null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(errorMessage)),
                       );
                     } else {
-                      // 등록 버튼 클릭 시 처리할 내용 추가
-                      // 예를 들어, 입력된 내용을 서버에 전송하는 등의 작업
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('문의가 접수되었습니다. ')),
+                      );
                     }
                   },
+                  // 등록 버튼
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey, // Set the button color to grey
+                    backgroundColor: Colors.grey, 
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // Rounded corners with a radius of 10
+                      borderRadius: BorderRadius.circular(10), 
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20), // Padding of 5 pixels
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20), 
                   ),
                   child: const Text(
                     '등록',
                     style: TextStyle(
-                      color: Colors.white, // Set the text color to white
+                      color: Colors.white, 
                     ),
                   ),
                 ),
@@ -1430,21 +1443,21 @@ class ChatbotPage extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
+            // 대화 내역
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(16.0),
                 children: [
-                  const ChatbotChat(message: '어떤 상품을 찾으세요?'), // Chatbot message
-                  const SizedBox(height: 8), // Spacing between messages
-                  const UserChat(message: '심플하면서 화려한 가구 추천해줘'), // User message
-                  const SizedBox(height: 8), // Spacing between messages
+                  const ChatbotChat(message: '어떤 상품을 찾으세요?'), 
+                  const SizedBox(height: 8), 
+                  const UserChat(message: '심플하면서 화려한 가구 추천해줘'),
+                  const SizedBox(height: 8),
                   const ChatbotRecommendChat(),
-                  const SizedBox(height: 8), // Spacing between messages
-                  // Additional messages can be added here
-                ],
+                  const SizedBox(height: 8), 
+                  ],
               ),
             ),
-            // Container with border above the input field
+
             Container(
               decoration: BoxDecoration(
                 border: Border(
@@ -1452,7 +1465,7 @@ class ChatbotPage extends StatelessWidget {
                 ),
               ),
             ),
-            // Message Input Field at the bottom
+            // 입력 칸 
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -1500,7 +1513,6 @@ class ChatbotPage extends StatelessWidget {
                     onPressed: () {
                       print('Sent message: ${messageController.text}');
                       messageController.clear();
-                      // Update your chat messages here as needed
                     },
                   ),
                 ],
@@ -1617,7 +1629,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Column(
       children: [
         Container(
-          color: Colors.white, // 전체 배경 흰색으로 설정
+          color: Colors.white, 
           child: AppBar(
             title: Text(
               title,
@@ -1627,8 +1639,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             backgroundColor: Colors.white,
-            automaticallyImplyLeading: false,
-            elevation: 0, // 그림자 제거
+          automaticallyImplyLeading: false,
+            elevation: 0, 
             actions: [
               IconButton(
                 icon: ColorFiltered(
@@ -1814,7 +1826,6 @@ class UserChat extends StatelessWidget {
     );
   }
 }
-
 
 //챗봇 채팅
 class ChatbotChat extends StatelessWidget {
