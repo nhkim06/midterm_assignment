@@ -1193,8 +1193,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 }
 
 
-
-
 // 채팅 페이지
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -1300,8 +1298,6 @@ class ChatPage extends StatelessWidget {
 }
 
 
-
-
 //리뷰 페이지
 class ReviewPage extends StatelessWidget {
   final List<Map<String, dynamic>> reviews;
@@ -1385,7 +1381,6 @@ class ReviewPage extends StatelessWidget {
     );
   }
 }
-
 
 
 //**********상단 바 디자인**********//
@@ -1722,7 +1717,6 @@ class ChatbotRecommendChat extends StatelessWidget {
 }
 
 
-
 //**********음성 인식**********//
 class VoiceRecordBottomSheet extends StatelessWidget {
   const VoiceRecordBottomSheet({Key? key}) : super(key: key);
@@ -1780,26 +1774,51 @@ class VoiceRecordBottomSheet extends StatelessWidget {
               ),
             ),
             const Spacer(), // This will push the bottom navigation bar to the bottom
-            // Bottom navigation bar with the Complete button
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Implement completion functionality
-                  Navigator.pop(context); // Close the bottom sheet
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green, // Set button color
-                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 30.0), // Button padding
-                ),
-                child: const Text(
-                  '완료',
-                  style: TextStyle(
-                    color: Colors.white, // Set text color of the button
-                    fontSize: 16.0, // Set text size of the button
+            // Bottom navigation bar with the buttons
+            Row(
+              children: [
+                // "다시 말하기" button
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {
+                      // Implement re-record functionality
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.grey), // Green border
+                      backgroundColor: Colors.white, // White background
+                      padding: const EdgeInsets.symmetric(vertical: 16.0), // Button padding
+                    ),
+                    child: const Text(
+                      '다시 말하기',
+                      style: TextStyle(
+                        color: Colors.grey, // Green text color
+                        fontSize: 16.0, // Set text size
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(width: 8.0), // Spacing between buttons
+                // "완료" button
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Implement completion functionality
+                      Navigator.pop(context); // Close the bottom sheet
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey, // Set button color
+                      padding: const EdgeInsets.symmetric(vertical: 16.0), // Button padding
+                    ),
+                    child: const Text(
+                      '완료',
+                      style: TextStyle(
+                        color: Colors.white, // Set text color of the button
+                        fontSize: 16.0, // Set text size of the button
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
