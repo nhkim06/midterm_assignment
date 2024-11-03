@@ -196,7 +196,7 @@ class _SearchPageState extends State<SearchPage> {
                 }).toList(),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 32),
 
             // 검색 랭킹을 위한 리스트 추가
             Container(
@@ -230,7 +230,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
 
-            const SizedBox(height: 30), // Space before recommended products
+            const SizedBox(height: 32), // Space before recommended products
             Container(
               alignment: Alignment.centerLeft, // Left align
               child: const Text(
@@ -920,6 +920,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                 ),
               ),
+              
               const SizedBox(height: 20),
               const Divider(thickness: 0.5, color: Colors.grey),
               const SizedBox(height: 20),
@@ -1408,6 +1409,39 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 }
 
 
+// 상품 확대 (완)
+class ProductZoom extends StatelessWidget {
+  final String imagePath;
+
+  // Constructor to receive the image path
+  const ProductZoom({Key? key, required this.imagePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Product Zoom'),
+        backgroundColor: Colors.blue, // Customize your AppBar color
+      ),
+      body: Center(
+        child: GestureDetector(
+          onTap: () {
+            // Optional: Close the zoom view on tap
+            Navigator.of(context).pop();
+          },
+          child: Image.asset(
+            imagePath,
+            fit: BoxFit.contain, // Adjust how the image fits in the space
+            width: double.infinity, // Make image take full width
+            height: double.infinity, // Make image take full height
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 // 챗봇 페이지 (완)
 class ChatbotPage extends StatelessWidget {
   const ChatbotPage({Key? key}) : super(key: key);
@@ -1431,7 +1465,7 @@ class ChatbotPage extends StatelessWidget {
           children: [
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(16.0),
                 children: [
                   const ChatbotChat(message: '어떤 상품을 찾으세요?'), // Chatbot message
                   const SizedBox(height: 8), // Spacing between messages
