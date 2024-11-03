@@ -1095,7 +1095,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 const SizedBox(height: 5),
                 TextField(
-                  controller: titleController, // Ensure this is the correct controller for the title
+                  controller: titleController,
                   maxLines: 1,
                   decoration: InputDecoration(
                     labelText: '30자 내로 입력해주세요.',
@@ -1157,7 +1157,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 const SizedBox(height: 5),
                 Image.asset(
-                  'assets/add_img.png', // Add your image here
+                  'assets/add_img.png', 
                   width: 70,
                   height: 70,
                   color: Colors.grey,
@@ -1193,7 +1193,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       );
                     }
                   },
-                  // 등록 버튼
+                  // 버튼
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey, 
                     shape: RoundedRectangleBorder(
@@ -1210,6 +1210,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 const SizedBox(height: 20),
               ],
+
+
               // 리뷰
               if (showReviews) ...[
                 const SizedBox(height: 10),
@@ -1240,7 +1242,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               endIndent: 0.0,        
             ),
             const SizedBox(height: 20),
-            
+            // 리뷰 내용
                 Column(
                   children: List.generate(
                     showAllReviews ? reviews.length : 2,
@@ -1302,6 +1304,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                 ),
               ),
+              // 리뷰 더보기
               if (reviews.length > 2)
                 TextButton(
                   onPressed: () {
