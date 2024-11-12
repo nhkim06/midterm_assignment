@@ -473,9 +473,8 @@ void _startImageRotation() {
 
 void _showPrevImage() {
   setState(() {
-    // Decrement the index and wrap around if needed
     currentIndex = (currentIndex - 1 + images.length) % images.length;
-    currentImage = images[currentIndex]; // Update the current image
+    currentImage = images[currentIndex]; 
   });
 }
 
