@@ -57,15 +57,14 @@ String selectedCategory = '의자';
 String currentImage = 'assets/adv1.png';
 Timer? _timer;
 
-// List of advertisement images
+// 광고 이미지 리스트 
 final List<String> images = [
   'assets/adv1.png',
   'assets/adv2.png',
   'assets/adv3.png',
-  // 광고 이미지 추가
+  // 광고 이미지 추가 가능
 ];
 
-// Current index of the image being displayed
 int currentIndex = 0;
 
 @override
@@ -76,7 +75,7 @@ void initState() {
 
 void _startImageRotation() {
   _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-    _showNextImage(); // Show the next image every 5 seconds
+    _showNextImage(); 
   });
 }
 
@@ -89,9 +88,8 @@ void _showPrevImage() {
 
 void _showNextImage() {
   setState(() {
-    // Increment the index and wrap around if needed
     currentIndex = (currentIndex + 1) % images.length;
-    currentImage = images[currentIndex]; // Update the current image
+    currentImage = images[currentIndex]; 
   });
 }
 

@@ -8,7 +8,6 @@ class StorePage extends StatelessWidget {
 
    @override
   Widget build(BuildContext context) {
-    // Sample manufacturers
     final List<String> manufacturers = [
       '제조사 1',
       '제조사 2',
@@ -25,13 +24,12 @@ class StorePage extends StatelessWidget {
           return ListTile(
             title: Text(manufacturers[index]),
             onTap: () {
-              // Handle manufacturer selection
               Navigator.pop(context, manufacturers[index]);
             },
           );
         },
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2),
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 1),
       floatingActionButton: const ChatFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

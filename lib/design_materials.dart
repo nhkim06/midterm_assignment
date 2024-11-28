@@ -95,7 +95,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white, // Set background color to white
+        backgroundColor: Colors.white, 
         currentIndex: currentIndex,
         items: [
           BottomNavigationBarItem(
@@ -171,7 +171,7 @@ class ChatFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'AI와 대화하여 추천 상품을 확인해보세요.', // Tooltip message
+      message: 'AI와 대화하여 추천 상품을 확인해보세요.',
       child: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -179,10 +179,10 @@ class ChatFloatingActionButton extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const ChatbotPage()),
           );
         },
-        backgroundColor: const Color(0xFFD5FDC1), // Light green
+        backgroundColor: const Color(0xFFD5FDC1), 
         child: Image.asset(
           'assets/chatbot.png',
-          color: const Color(0xFF529147), // Apply green color to the icon
+          color: const Color(0xFF529147),
           height: 24,
           width: 24,    
         ),
@@ -199,25 +199,25 @@ class VoiceRecordBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(50.0)), // Round top corners
+      borderRadius: BorderRadius.vertical(top: Radius.circular(50.0)),
       child: Container(
         padding: const EdgeInsets.all(16.0),
-        height: 300, // Set the height of the bottom sheet
-        color: Colors.white, // Set the background color of the bottom sheet
+        height: 300,
+        color: Colors.white,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch, // Align content to stretch full width
+          crossAxisAlignment: CrossAxisAlignment.stretch, 
           children: [
             // Close button at the top right
             Align(
               alignment: Alignment.topRight,
               child: IconButton(
-                icon: const Icon(Icons.close, color: Colors.grey), // Close button icon
+                icon: const Icon(Icons.close, color: Colors.grey),
                 onPressed: () {
-                  Navigator.pop(context); // Close the bottom sheet
+                  Navigator.pop(context);
                 },
               ),
             ),
-            const SizedBox(height: 20.0), // Spacing between the close button and mic icon
+            const SizedBox(height: 20.0), 
             // Mic icon in the center
             Center(
               child: GestureDetector(
@@ -225,31 +225,28 @@ class VoiceRecordBottomSheet extends StatelessWidget {
                   // Implement recording functionality
                 },
                 child: Image.asset(
-                  'assets/mic.png', // Make sure to place your mic.png in the 'assets' folder
-                  width: 50, // Set the width of the mic icon
-                  height: 50, // Set the height of the mic icon
-                  color: Colors.green, // Set the color of the icon (for grayscale)
+                  'assets/mic.png', 
+                  width: 50, 
+                  height: 50, 
+                  color: Colors.green, 
                 ),
               ),
             ),
-            const SizedBox(height: 20.0), // Spacing between the mic icon and progress indicator
-            // Linear progress indicator at the bottom
+            const SizedBox(height: 20.0),
             const LinearProgressIndicator(
-              color: Colors.green, // Set the color of the progress indicator to green
+              color: Colors.green, 
             ),
-            const SizedBox(height: 8.0), // Spacing between the progress indicator and text
-            // Text below the progress indicator
+            const SizedBox(height: 8.0), 
             const Center(
               child: Text(
                 '듣는 중...',
                 style: TextStyle(
-                  color: Colors.black, // Set the text color
-                  fontSize: 16.0, // Set the text size
+                  color: Colors.black, 
+                  fontSize: 16.0, 
                 ),
               ),
             ),
-            const Spacer(), // This will push the bottom navigation bar to the bottom
-            // Bottom navigation bar with the buttons
+            const Spacer(), 
             Row(
               children: [
                 // "다시 말하기" button
@@ -259,36 +256,34 @@ class VoiceRecordBottomSheet extends StatelessWidget {
                       // Implement re-record functionality
                     },
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.grey), // Green border
-                      backgroundColor: Colors.white, // White background
-                      padding: const EdgeInsets.symmetric(vertical: 16.0), // Button padding
+                      side: const BorderSide(color: Colors.grey), 
+                      backgroundColor: Colors.white, 
+                      padding: const EdgeInsets.symmetric(vertical: 16.0), 
                     ),
                     child: const Text(
                       '다시 말하기',
                       style: TextStyle(
-                        color: Colors.grey, // Green text color
-                        fontSize: 16.0, // Set text size
+                        color: Colors.grey, 
+                        fontSize: 16.0, 
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8.0), // Spacing between buttons
-                // "완료" button
+                const SizedBox(width: 8.0), 
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      // Implement completion functionality
-                      Navigator.pop(context); // Close the bottom sheet
+                      Navigator.pop(context); 
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, // Set button color
-                      padding: const EdgeInsets.symmetric(vertical: 16.0), // Button padding
+                      backgroundColor: Colors.grey, 
+                      padding: const EdgeInsets.symmetric(vertical: 16.0), 
                     ),
                     child: const Text(
                       '완료',
                       style: TextStyle(
-                        color: Colors.white, // Set text color of the button
-                        fontSize: 16.0, // Set text size of the button
+                        color: Colors.white, 
+                        fontSize: 16.0, 
                       ),
                     ),
                   ),
