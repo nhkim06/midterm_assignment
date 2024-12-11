@@ -1,7 +1,6 @@
-//상단바, 하단바, 챗봇 플로팅 버튼, 음성 인식 디자인
+//상단 바, 하단 바, 챗봇 플로팅 버튼, 음성 인식 디자인
 import 'package:flutter/material.dart';
 import 'home.dart';  
-import 'store.dart';
 import 'heart.dart';
 import 'user.dart';
 import 'search.dart';
@@ -109,19 +108,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'store.png',
-              width: 20,
-              height: 20,
-              color: currentIndex == 1 ? Colors.black : Colors.grey,
-            ),
-            label: '스토어',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
               'heart.png',
               width: 20,
               height: 20,
-              color: currentIndex == 2 ? Colors.black : Colors.grey,
+              color: currentIndex == 1 ? Colors.black : Colors.grey,
             ),
             label: '좋아요',
           ),
@@ -130,24 +120,22 @@ class BottomNavigationBarWidget extends StatelessWidget {
               'user.png',
               width: 20,
               height: 20,
-              color: currentIndex == 3 ? Colors.black : Colors.grey,
+              color: currentIndex == 2 ? Colors.black : Colors.grey,
             ),
             label: '마이페이지',
           ),
         ],
         onTap: (index) {
+          
           Widget page;
           switch (index) {
             case 0:
               page = const HomePage();
               break;
             case 1:
-              page = const StorePage();
-              break;
-            case 2:
               page = const HeartPage();
               break;
-            case 3:
+            case 2:
               page = const UserPage();
               break;
             default:

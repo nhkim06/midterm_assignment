@@ -49,7 +49,7 @@ class UserPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 3),
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2),
       floatingActionButton: const ChatFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
