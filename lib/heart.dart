@@ -1,54 +1,129 @@
-// 좋아요 페이지 (임시 페이지)
-
 import 'package:flutter/material.dart';
 import 'design_materials.dart';
+import 'search.dart';
+import 'cart.dart';
+import 'home.dart';
+import 'user.dart';
+import 'chatbot.dart';
 
-class HeartPage extends StatelessWidget {
+class HeartPage extends StatefulWidget {
   const HeartPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // Sample list of liked items
-    final List<String> likedItems = [
-      '아이템 1',
-      '아이템 2',
-      '아이템 3',
-      '아이템 4',
-      '아이템 5',
-    ];
+  _HeartPageState createState() => _HeartPageState();
+}
 
+class _HeartPageState extends State<HeartPage> {
+  // Sample product data
+  final List<Map<String, String>> products = [
+    {'name': 'Product 1', 'price': '\$10', 'image': 'assets/bed10.png', 'manufacturer': 'Brand A'},
+    {'name': 'Product 2', 'price': '\$15', 'image': 'assets/desk2.png', 'manufacturer': 'Brand B'},
+    {'name': 'Product 3', 'price': '\$20', 'image': 'assets/sofa6.png', 'manufacturer': 'Brand C'},
+  ];
+
+  // Track the liked status of each product
+  List<bool> likedItems = [false, false, false];
+
+  void toggleLike(int index) {
+    setState(() {
+      likedItems[index] = !likedItems[index]; // Toggle the like status
+      if (likedItems[index]) {
+        // When liked, keep the product in the list
+      } else {
+        // Remove the product if unliked
+        products.removeAt(index);
+        likedItems.removeAt(index);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '좋아요', context: context, isHomePage: false), // 볼드체 아님
-      body: likedItems.isEmpty
-          ? const Center(child: Text('좋아하는 아이템이 없습니다.')) // No items message
-          : ListView.builder(
-              itemCount: likedItems.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text(likedItems[index]),
-                     trailing: IconButton(
-                      icon: ColorFiltered(
-                        colorFilter: const ColorFilter.mode(
-                          Colors.red, 
-                          BlendMode.srcIn, // Use srcIn to apply the color to the image
-                        ),
+      appBar: AppBar(title: const Text('Liked Items')),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(8.0),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          childAspectRatio: 3 / 4,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return GestureDetector(
+            onTap: () {
+              // Handle navigation to product detail page if needed
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Product image
+                    Center(
+                      child: Container(
+                        width: 80,
+                        height: 60,
                         child: Image.asset(
-                          'assets/heart.png', // Ensure the correct path to your image asset
-                          width: 24,
-                          height: 24,
+                          product['image']!,
+                          fit: BoxFit.contain,
                         ),
                       ),
-                      onPressed: () {
-                        // Handle removal of liked item
-                        // You can implement the logic to remove the item from the list here
-                      },
                     ),
-                  ),
-                );
-              },
+                    const SizedBox(height: 20),
+                    // Product price
+                    Text(
+                      product['price']!,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    // Product name
+                    Text(
+                      product['name']!,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    // Product manufacturer
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          product['manufacturer']!,
+                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            likedItems[index] ? Icons.favorite : Icons.favorite_border,
+                            color: likedItems[index] ? Colors.red : Colors.grey,
+                          ),
+                          onPressed: () => toggleLike(index),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 2),
+          );
+        },
+      ),
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
       floatingActionButton: const ChatFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
