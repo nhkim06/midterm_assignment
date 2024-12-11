@@ -15,44 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
 
-  final Map<String, List<Map<String, String>>> products = {  //상품 데이터
-    '의자': [
-      {'name': '의자1', 'manufacturer': '제작사 A', 'image': 'assets/chair1.png', 'price': '₩100,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '의자2', 'manufacturer': '제작사 B', 'image': 'assets/chair2.png', 'price': '₩120,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '의자3', 'manufacturer': '제작사 C', 'image': 'assets/chair3.png', 'price': '₩150,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '의자4', 'manufacturer': '제작사 D', 'image': 'assets/chair4.png', 'price': '₩80,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '의자5', 'manufacturer': '제작사 E', 'image': 'assets/chair5.png', 'price': '₩110,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '의자6', 'manufacturer': '제작사 F', 'image': 'assets/chair6.png', 'price': '₩130,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-    ],
-    '책상': [
-      {'name': '책상1', 'manufacturer': '제작사 G', 'image': 'assets/desk1.png', 'price': '₩200,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '책상2', 'manufacturer': '제작사 H', 'image': 'assets/desk2.png', 'price': '₩180,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '책상3', 'manufacturer': '제작사 I', 'image': 'assets/desk3.png', 'price': '₩250,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '책상4', 'manufacturer': '제작사 J', 'image': 'assets/desk4.png', 'price': '₩220,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-    ],
-    '소파': [
-      {'name': '소파1', 'manufacturer': '제작사 K', 'image': 'assets/sofa1.png', 'price': '₩300,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '소파2', 'manufacturer': '제작사 L', 'image': 'assets/sofa2.png', 'price': '₩350,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '소파3', 'manufacturer': '제작사 M', 'image': 'assets/sofa3.png', 'price': '₩400,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '소파4', 'manufacturer': '제작사 N', 'image': 'assets/sofa4.png', 'price': '₩450,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '소파5', 'manufacturer': '제작사 O', 'image': 'assets/sofa5.png', 'price': '₩500,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '소파6', 'manufacturer': '제작사 P', 'image': 'assets/sofa6.png', 'price': '₩550,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-    ],
-    '침대': [
-      {'name': '침대1', 'manufacturer': '제작사 Q', 'image': 'assets/bed1.png', 'price': '₩500,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '침대2', 'manufacturer': '제작사 R', 'image': 'assets/bed2.png', 'price': '₩450,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '침대3', 'manufacturer': '제작사 S', 'image': 'assets/bed3.png', 'price': '₩600,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '침대4', 'manufacturer': '제작사 T', 'image': 'assets/bed4.png', 'price': '₩550,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-    ],
-    '식탁': [
-      {'name': '식탁1', 'manufacturer': '제작사 U', 'image': 'assets/table1.png', 'price': '₩400,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '식탁2', 'manufacturer': '제작사 V', 'image': 'assets/table2.png', 'price': '₩420,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '식탁3', 'manufacturer': '제작사 W', 'image': 'assets/table3.png', 'price': '₩450,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '식탁4', 'manufacturer': '제작사 X', 'image': 'assets/table4.png', 'price': '₩480,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '식탁5', 'manufacturer': '제작사 Y', 'image': 'assets/table5.png', 'price': '₩500,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-      {'name': '식탁6', 'manufacturer': '제작사 Z', 'image': 'assets/table6.png', 'price': '₩530,000', 'id' : 'ABCDEF', 'description' : '세련된 모던 디자인으로 어떤 인테리어에도 잘 어울립니다. 다양한 색상 옵션으로 개인의 취향에 맞춰 선택할 수 있습니다.'},
-    ],
-  };
+  final Map<String, List<Map<String, String>>> products = {  };
 String selectedCategory = '의자';
 String currentImage = 'assets/adv1.png';
 Timer? _timer;
