@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'home.dart';  // UI 디자인 완료
-import 'store.dart';
 import 'heart.dart';
 import 'user.dart';
 
