@@ -16,7 +16,7 @@ class ReviewPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Container(
-        color: Colors.white, // Set the body background color to white
+        color: Colors.white,
         child: ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: reviews.length,

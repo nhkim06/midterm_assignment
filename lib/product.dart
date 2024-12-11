@@ -39,8 +39,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       "content": "배송이 빠르고 서비스가 좋았습니다. 매우 만족합니다!",
       "rating": 5
     }
-]
-;
+];
 
   double get averageRating {
     if (reviews.isEmpty) return 0.0; // Handle case with no reviews
