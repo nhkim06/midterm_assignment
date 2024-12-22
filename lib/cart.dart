@@ -1,40 +1,49 @@
-// 장바구니 페이지 (임시 페이지)
-
 import 'package:flutter/material.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final List<Map<String, String>> cartItems = [
-      {
-        'image': 'assets/chair1.png',
-        'name': '의자1',
-        'manufacturer': '제작사 A',
-        'price': '₩100,000',
-      },
-      {
-        'image': 'assets/desk3.png',
-        'name': '책상3',
-        'manufacturer': '제작사 I',
-        'price': '₩250,000',
-      },
-      {
-        'image': 'assets/sofa1.png',
-        'name': '소파1',
-        'manufacturer': '제작사 K',
-        'price': '₩300,000',
-      },
-    ];
+  State<CartPage> createState() => _CartPageState();
+}
 
+class _CartPageState extends State<CartPage> {
+  List<Map<String, String>> cartItems = [
+    {
+      'image': 'assets/chair1.png',
+      'name': '의자1',
+      'manufacturer': '제작사 A',
+      'price': '₩100,000',
+    },
+    {
+      'image': 'assets/desk3.png',
+      'name': '책상3',
+      'manufacturer': '제작사 I',
+      'price': '₩250,000',
+    },
+    {
+      'image': 'assets/sofa1.png',
+      'name': '소파1',
+      'manufacturer': '제작사 K',
+      'price': '₩300,000',
+    },
+  ];
+
+  void _removeItem(int index) {
+    setState(() {
+      cartItems.removeAt(index);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Container(
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: Colors.grey[300]!, width: 1),
+              bottom: BorderSide(color: const Color(0xFFF5F5F5), width: 1),
             ),
           ),
           child: AppBar(
@@ -51,13 +60,13 @@ class CartPage extends StatelessWidget {
                 final item = cartItems[index];
                 return Card(
                   child: ListTile(
-                    leading: Image.asset(item['image'] ?? ''),
+                    leading: Image.asset(item['image'] ?? '', width: 50, height: 50, fit: BoxFit.cover),
                     title: Text(item['name'] ?? ''),
                     subtitle: Text('${item['manufacturer']} - ${item['price']}'),
                     trailing: IconButton(
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
-                        // 삭제 기능 추가
+                        _removeItem(index);
                       },
                     ),
                   ),

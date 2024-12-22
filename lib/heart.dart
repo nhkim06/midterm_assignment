@@ -41,6 +41,7 @@ class _HeartPageState extends State<HeartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Liked Items')),
+      backgroundColor: Colors.white,
       body: GridView.builder(
         padding: const EdgeInsets.all(8.0),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -54,11 +55,10 @@ class _HeartPageState extends State<HeartPage> {
           final product = products[index];
           return GestureDetector(
             onTap: () {
-              // Handle navigation to product detail page if needed
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: const Color(0xFFF5F5F5),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
