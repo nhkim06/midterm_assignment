@@ -69,10 +69,10 @@ class ReviewPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   const Divider(
-                    color: Color(0xFFE0E0E0), // Line color
-                    thickness: 0.5,          // Line thickness
-                    indent: 16.0,            // Left margin
-                    endIndent: 16.0,         // Right margin
+                    color: Color(0xFFE0E0E0), 
+                    thickness: 0.5,          
+                    indent: 16.0,            
+                    endIndent: 16.0,         
                   ),
                 ],
               ),
