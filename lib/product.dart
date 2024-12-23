@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'product_review.dart';
 import 'ProductService.dart';
+import 'productData.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
@@ -17,7 +18,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   bool isLiked = false;
   int likeCount = 0;
   bool showAllReviews = false;
-
   // Sample reviews
   final List<Map<String, dynamic>> reviews = [
     {
@@ -47,17 +47,49 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     super.initState();
     _loadLikeCount();
   }
-
+  final List<String> categories = ProductCategories.categories;
+  Map<String, Future<List<Products>>> products = ProductCategories.products;
   Future<void> _loadLikeCount() async {
     try {
-      int count = await ProductService.getLikeCount('chairs', widget.product['id'] ?? '');
-      setState(() {
-        likeCount = count;
-      });
+      // Get the product type from the image path
+      String productType = '';
+      if (widget.product['image']!.contains('chair')) {
+        productType = 'chairs';
+      } else if (widget.product['image']!.contains('desk')) {
+        productType = 'desks';
+      } else if (widget.product['image']!.contains('sofa')) {
+        productType = 'sofas';
+      } else if (widget.product['image']!.contains('bed')) {
+        productType = 'beds';
+      } else if (widget.product['image']!.contains('table')) {
+        productType = 'tables';
+      }
+
+      final productsList = await products[productType];
+      if (productsList != null) {
+        final product = productsList.firstWhere(
+          (p) => p.id == widget.product['id'],
+          orElse: () => Products(
+            name: '',
+            manufacturer: '', 
+            image: '',
+            price: 0,
+            id: '',
+            description: '',
+            selected: false,
+            likes: 0,
+          ),
+        );
+        setState(() {
+          likeCount = product.likes;
+          isLiked = product.selected; // Use selected field from DB to determine if liked
+        });
+      }
     } catch (e) {
       print('Error loading like count: $e');
       setState(() {
-        likeCount = 0; // Set default value on error
+        likeCount = 0;
+        isLiked = false;
       });
     }
   }
