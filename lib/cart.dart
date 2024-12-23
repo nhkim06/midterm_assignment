@@ -38,7 +38,14 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('장바구니')),
+      appBar: AppBar(
+        title: const Text(
+          '장바구니',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       backgroundColor: Colors.white,
       body: cartItems.isEmpty
           ? const Center(child: Text('장바구니가 비어 있습니다.'))
