@@ -3,7 +3,7 @@ import 'productData.dart';
 import 'dart:convert';
 
 class ProductService { 
-  static const baseUrl = 'http://172.30.1.78:3030';
+  static const baseUrl = 'http://172.30.1.26:3030';
   static const headers = {'Content-Type': 'application/json'};
 
   static Future<List<Products>> getProduct(String type) async {
@@ -55,4 +55,21 @@ class ProductService {
       throw Exception('Failed to delete product');
     }
   }
+
+  static Future<int> getLikeCount(String productType, String productId) async {
+  try {
+    final response = await http.get(Uri.parse('$baseUrl/$productType/$productId'));
+
+    if (response.statusCode == 200) {
+      final productData = jsonDecode(response.body);
+      return productData['likes'] ?? 0; 
+    } else {
+      throw Exception('Failed to load product: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error loading like count: $e');
+    return 0;
+  }
+}
+
 }

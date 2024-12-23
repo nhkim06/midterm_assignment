@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'product_review.dart';
+import 'ProductService.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
@@ -14,32 +15,52 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   bool isLiked = false;
-  int likeCount = 41;
+  int likeCount = 0;
   bool showAllReviews = false;
 
   // Sample reviews
   final List<Map<String, dynamic>> reviews = [
     {
-      "user": "사용자1",
+      "user": "사용자 1", 
       "content": "훌륭한 제품입니다! 품질과 디자인이 정말 마음에 들어요.",
       "rating": 4
     },
     {
-      "user": "사용자2",
+      "user": "사용자 2",
       "content": "가격 대비 좋은 가치입니다. 다른 사람에게 추천할 것입니다!",
       "rating": 5
     },
     {
-      "user": "사용자3",
+      "user": "사용자 3",
       "content": "괜찮은 품질이지만 색상이 사진과 약간 다릅니다.",
       "rating": 3
     },
     {
-      "user": "사용자4",
+      "user": "사용자 4",
       "content": "배송이 빠르고 서비스가 좋았습니다. 매우 만족합니다!",
       "rating": 5
     }
-];
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLikeCount();
+  }
+
+  Future<void> _loadLikeCount() async {
+    try {
+      int count = await ProductService.getLikeCount('chairs', widget.product['id'] ?? '');
+      setState(() {
+        likeCount = count;
+      });
+    } catch (e) {
+      print('Error loading like count: $e');
+      setState(() {
+        likeCount = 0; // Set default value on error
+      });
+    }
+  }
 
   double get averageRating {
     if (reviews.isEmpty) return 0.0; // Handle case with no reviews
