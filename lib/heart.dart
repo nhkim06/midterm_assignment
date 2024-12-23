@@ -36,7 +36,14 @@ class _HeartPageState extends State<HeartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Liked Items')),
+      appBar: AppBar(
+        title: const Text(
+          'Liked Items',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       backgroundColor: Colors.white,
       body: GridView.builder(
         padding: const EdgeInsets.all(8.0),
@@ -119,7 +126,7 @@ class _HeartPageState extends State<HeartPage> {
           );
         },
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
+      bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 1),
       floatingActionButton: const ChatFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
