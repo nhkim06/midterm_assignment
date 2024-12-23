@@ -18,6 +18,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   bool isLiked = false;
   int likeCount = 0;
   bool showAllReviews = false;
+  bool showDescription = true;
+  bool showReviews = false;
+  bool showInquiries = false;
+  String selectedInquiryType = '배송';
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
 
   // Sample reviews
   final List<Map<String, dynamic>> reviews = [
@@ -42,52 +48,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       "rating": 5
     }
   ];
-  final List<String> categories = ProductCategories.categories;
-  Map<String, Future<List<Products>>> products = ProductCategories.products;
-
-  Future<void> loadProductDetails() async {
-    try {
-      String productType = '';
-      if (widget.product['image']!.contains('chair')) {
-        productType = 'chairs';
-      } else if (widget.product['image']!.contains('desk')) {
-        productType = 'desks';
-      } else if (widget.product['image']!.contains('sofa')) {
-        productType = 'sofas';
-      } else if (widget.product['image']!.contains('bed')) {
-        productType = 'beds';
-      } else if (widget.product['image']!.contains('table')) {
-        productType = 'tables';
-      }
-      final String productId = widget.product['id'] ?? '';
-      final product = await ProductService.getOneProduct(productType, productId);
-      
-      setState(() {
-        likeCount = product.likes ?? 0;
-        isLiked = product.selected;
-      });
-      
-    } catch (e) {
-      setState(() {
-        likeCount = 0;
-        isLiked = false;
-      });
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    print('Product Type: ${widget.product}');
-    print('Product Type: ${widget.product['image']!}');
-    print('Product Image: ${widget.product['image']}');
-    print('Product ID: ${widget.product['id']}');
-    print('Categories: $categories');
-    products.forEach((key, value) {
-      value.then((productList) {
-        print('Products for $key: $productList');
-      });
-    });
+    likeCount = int.parse(widget.product['likes'] ?? '0');
+    isLiked = (widget.product['selected'] == 'true');
   }
 
   double get averageRating {
@@ -95,14 +61,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     double totalRating = reviews.fold(0.0, (sum, review) => sum + review['rating']);
     return totalRating / reviews.length;
   }
-
-  bool showDescription = true;
-  bool showReviews = false;
-  bool showInquiries = false;
-
-  String selectedInquiryType = '배송'; 
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -27,7 +27,7 @@
       "price": 150000,
       "id": "WERTYU",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
-      "likes": 0,
+      "likes": 1,
       "selected": true
     },
     {
@@ -323,7 +323,7 @@
       "price": 4500000,
       "id": "ASDFSD", 
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
-      "likes": 0,
+      "likes": 1,
       "selected": true
     },
     {
@@ -455,7 +455,7 @@
       "price": 5000000,
       "id": "YUIYUI",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
-      "likes": 0,
+      "likes": 1,
       "selected": true
     },
     {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'design_materials.dart';
+import 'ProductService.dart';
+import 'productData.dart';
 
 
 class HeartPage extends StatefulWidget {
@@ -10,28 +12,8 @@ class HeartPage extends StatefulWidget {
 }
 
 class _HeartPageState extends State<HeartPage> {
-  // Sample product data
-  final List<Map<String, String>> products = [
-    {'name': 'Product 1', 'price': '\$10', 'image': 'assets/bed10.png', 'manufacturer': 'Brand A'},
-    {'name': 'Product 2', 'price': '\$15', 'image': 'assets/desk2.png', 'manufacturer': 'Brand B'},
-    {'name': 'Product 3', 'price': '\$20', 'image': 'assets/sofa6.png', 'manufacturer': 'Brand C'},
-  ];
-
-  // Track the liked status of each product
-  List<bool> likedItems = [false, false, false];
-
-  void toggleLike(int index) {
-    setState(() {
-      likedItems[index] = !likedItems[index]; // Toggle the like status
-      if (likedItems[index]) {
-        // When liked, keep the product in the list
-      } else {
-        // Remove the product if unliked
-        products.removeAt(index);
-        likedItems.removeAt(index);
-      }
-    });
-  }
+  final List<String> categories = ProductCategories.categories;
+  Map<String, Future<List<Products>>> products = ProductCategories.products;
 
   @override
   Widget build(BuildContext context) {
@@ -45,84 +27,114 @@ class _HeartPageState extends State<HeartPage> {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: GridView.builder(
-        padding: const EdgeInsets.all(8.0),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          childAspectRatio: 3 / 4,
-        ),
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return GestureDetector(
-            onTap: () {
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Product image
-                    Center(
-                      child: Container(
-                        width: 80,
-                        height: 60,
-                        child: Image.asset(
-                          product['image']!,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    // Product price
-                    Text(
-                      product['price']!,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    // Product name
-                    Text(
-                      product['name']!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    // Product manufacturer
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: FutureBuilder<List<List<Products>>>(
+        future: Future.wait([
+          products[categories[0]]!, // chairs
+          products[categories[1]]!, // sofas  
+          products[categories[2]]!, // desks
+          products[categories[3]]!, // tables
+          products[categories[4]]!, // beds
+        ]),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No liked items'));
+          }
+
+          final allLikedProducts = snapshot.data!
+              .expand((products) => products)
+              .where((p) => p.selected)
+              .toList();
+
+          if (allLikedProducts.isEmpty) {
+            return const Center(child: Text('No liked items'));
+          }
+
+          return GridView.builder(
+            padding: const EdgeInsets.all(8.0),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 3 / 4,
+            ),
+            itemCount: allLikedProducts.length,
+            itemBuilder: (context, index) {
+              final product = allLikedProducts[index];
+              return GestureDetector(
+                onTap: () {
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          product['manufacturer']!,
-                          style: const TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            likedItems[index] ? Icons.favorite : Icons.favorite_border,
-                            color: likedItems[index] ? Colors.red : Colors.grey,
+                        // Product image
+                        Center(
+                          child: Container(
+                            width: 80,
+                            height: 60,
+                            child: Image.asset(
+                              product.image,
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                          onPressed: () => toggleLike(index),
+                        ),
+                        const SizedBox(height: 20),
+                        // Product price
+                        Text(
+                          product.price.toString(),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        // Product name
+                        Text(
+                          product.name,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        // Product manufacturer
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              product.manufacturer,
+                              style: const TextStyle(fontSize: 12, color: Colors.grey),
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              ),
+                              onPressed: () {
+                                // TODO: Implement unlike functionality
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
       ),

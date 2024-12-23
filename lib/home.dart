@@ -186,15 +186,19 @@ class _HomePageState extends State<HomePage> {
                           final product = productsList[index];
                           return GestureDetector(
                             onTap: () {
-                              // 여기서 ProductDetailPage로 product 정보를 Map 형태로 전달합니다
+                              // 여기서 ProductDetailPage로 product 정보를 Map 형태로 전달
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ProductDetailPage(product: {
                                     'image': product.image,
-                                    'price': product.price.toString(),
+                                    'price': product.price.toString(), 
                                     'name': product.name,
                                     'manufacturer': product.manufacturer,
+                                    'id': product.id,
+                                    'description': product.description,
+                                    'likes': product.likes.toString(),
+                                    'selected': product.selected.toString()
                                   }),
                                 ),
                               );

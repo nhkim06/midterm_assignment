@@ -3,7 +3,7 @@ import 'productData.dart';
 import 'dart:convert';
 
 class ProductService { 
-  static const baseUrl = 'http://192.168.0.139:3030';
+  static const baseUrl = 'http://172.30.1.26:3030';
   static const headers = {'Content-Type': 'application/json'};
 
   static Future<List<Products>> getProduct(String type) async {
