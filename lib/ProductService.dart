@@ -25,11 +25,10 @@ class ProductService {
       throw Exception('Failed to load Product: ${response.reasonPhrase}');
     }
   }
-
-  static Future<Products> createProduct(Products product) async {
+  static Future<Products> createProduct(Products product, String type) async {
     final jsonBody = jsonEncode(product.toJson());
     final response = await http.post(
-      Uri.parse('$baseUrl/products'),
+      Uri.parse('$baseUrl/$type'),
       headers: headers,
       body: jsonBody,
     );
@@ -42,10 +41,10 @@ class ProductService {
     }
   }
 
-  static Future<Products> updateProduct(Products product) async {
+  static Future<Products> updateProduct(Products product, String type) async {
     final jsonBody = jsonEncode(product.toJson());
     final response = await http.put(
-      Uri.parse('$baseUrl/products/${product.id}'),
+      Uri.parse('$baseUrl/$type/${product.id}'),
       headers: headers,
       body: jsonBody,
     );
@@ -58,15 +57,31 @@ class ProductService {
     }
   }
 
-  static Future<void> deleteProduct(String id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/products/$id'));
+  static Future<void> deleteProduct(String id, String type) async {
+    final response = await http.delete(Uri.parse('$baseUrl/$type/$id'));
 
     if (response.statusCode != 204) {
       throw Exception('Failed to delete product');
     }
   }
 
+  static Future<void> refreshProducts() async {
+    try {
+      final Map<String, Future<List<Products>>> refreshedProducts = {
+        '의자': getProduct('chairs'),
+        '책상': getProduct('desks'),
+        '소파': getProduct('sofas'),
+        '침대': getProduct('beds'),
+        '식탁': getProduct('tables'),
+      };
+      ProductCategories.products.clear();
+      ProductCategories.products.addAll(refreshedProducts);
+    } catch (e) {
+      throw Exception('Failed to refresh products: $e');
+    }
+  }
 }
+
 class ProductCategories {
     static final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
     static final Map<String, Future<List<Products>>> products = {
@@ -76,4 +91,4 @@ class ProductCategories {
       '침대': ProductService.getProduct('beds'),
       '식탁': ProductService.getProduct('tables'),
     };
-  }
+}

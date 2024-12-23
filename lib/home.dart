@@ -30,7 +30,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _startImageRotation();
+    _loadProducts();
+  }
 
+  Future<void> _loadProducts() async {
+    await ProductService.refreshProducts();
+    setState(() {
+      products = ProductCategories.products;
+    });
   }
 
   void _startImageRotation() {
@@ -64,156 +71,194 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: CustomAppBar(title: 'FamiliRoom', context: context, isHomePage: true),
       backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          // 광고 이미지
-          SliverToBoxAdapter(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  currentImage,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  left: 16,
-                  child: Opacity(
-                    opacity: 0.5,
-                    child: GestureDetector(
-                      onTap: _showPrevImage,
-                      child: Image.asset(
-                        'assets/prev.png',
-                        width: 35,
-                        height: 35,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 16,
-                  child: Opacity(
-                    opacity: 0.5,
-                    child: GestureDetector(
-                      onTap: _showNextImage,
-                      child: Image.asset(
-                        'assets/next.png',
-                        width: 35,
-                        height: 35,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          
-          // 카테고리
-          SliverToBoxAdapter(
-            child: Container(
-              color: const Color(0xFFF5F5F5),
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: categories.map((category) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = category;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: Text(
-                        category,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: selectedCategory == category ? Colors.green : Colors.black,
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          
-          // 추천 상품
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: RefreshIndicator(
+        onRefresh: _loadProducts,
+        child: CustomScrollView(
+          slivers: [
+            // 광고 이미지
+            SliverToBoxAdapter(
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  const Text(
-                    '추천상품',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  Image.asset(
+                    currentImage,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    left: 16,
+                    child: Opacity(
+                      opacity: 0.5,
+                      child: GestureDetector(
+                        onTap: _showPrevImage,
+                        child: Image.asset(
+                          'assets/prev.png',
+                          width: 35,
+                          height: 35,
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  // 상품
-                  FutureBuilder<List<Products>>(
-                    future: products[selectedCategory],
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: Text(
-                            '상품이 없습니다.',
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
-                        );
-                      }
-
-                      final productsList = snapshot.data!;
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
-                          childAspectRatio: 3 / 4,
+                  Positioned(
+                    right: 16,
+                    child: Opacity(
+                      opacity: 0.5,
+                      child: GestureDetector(
+                        onTap: _showNextImage,
+                        child: Image.asset(
+                          'assets/next.png',
+                          width: 35,
+                          height: 35,
                         ),
-                        itemCount: productsList.length,
-                        itemBuilder: (context, index) {
-                          final product = productsList[index];
-                          return GestureDetector(
-                            onTap: () {
-                              // 여기서 ProductDetailPage로 product 정보를 Map 형태로 전달
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ProductDetailPage(product: {
-                                    'image': product.image,
-                                    'price': product.price.toString(), 
-                                    'name': product.name,
-                                    'manufacturer': product.manufacturer,
-                                    'id': product.id,
-                                    'description': product.description,
-                                    'likes': product.likes.toString(),
-                                    'selected': product.selected.toString()
-                                  }),
-                                ),
-                              );
-                            },
-                            child: ProductCard(product: product),
-                          );
-                        },
-                      );
-                    },
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+            
+            // 카테고리
+            SliverToBoxAdapter(
+              child: Container(
+                color: const Color(0xFFF5F5F5),
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: categories.map((category) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedCategory = category;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: Text(
+                          category,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: selectedCategory == category ? Colors.green : Colors.black,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            
+            // 추천 상품
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '추천상품',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // 상품
+                    FutureBuilder<List<Products>>(
+                      future: products[selectedCategory],
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              '상품이 없습니다.',
+                              style: TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                          );
+                        }
+
+                        final productsList = snapshot.data!;
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 8,
+                            childAspectRatio: 3 / 4,
+                          ),
+                          itemCount: productsList.length,
+                          itemBuilder: (context, index) {
+                            final product = productsList[index];
+                            return GestureDetector(
+                              onTap: () {
+                                // 여기서 ProductDetailPage로 product 정보를 Map 형태로 전달
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailPage(product: {
+                                      'image': product.image,
+                                      'price': product.price.toString(), 
+                                      'name': product.name,
+                                      'manufacturer': product.manufacturer,
+                                      'id': product.id,
+                                      'description': product.description,
+                                      'likes': product.likes.toString(),
+                                      'selected': product.selected.toString()
+                                    }),
+                                  ),
+                                );
+                              },
+                              child: ProductCard(
+                                product: product,
+                                onLikePressed: () async {
+                                  try {
+                                    final updatedProduct = Products(
+                                      id: product.id,
+                                      name: product.name,
+                                      price: product.price,
+                                      image: product.image,
+                                      likes: product.selected ? product.likes - 1 : product.likes + 1,
+                                      selected: !product.selected,
+                                      manufacturer: product.manufacturer,
+                                      description: product.description,
+                                    );
+                                    String productType = '';
+                                    if (product.image.contains('chair')) {
+                                      productType = 'chairs';
+                                    } else if (product.image.contains('sofa')) {
+                                      productType = 'sofas';
+                                    } else if (product.image.contains('desk')) {
+                                      productType = 'desks';
+                                    } else if (product.image.contains('bed')) {
+                                      productType = 'beds';
+                                    } else if (product.image.contains('table')) {
+                                      productType = 'tables';
+                                    }
+                                    await ProductService.updateProduct(updatedProduct, productType);
+                                    await ProductService.refreshProducts();
+                                    setState(() {
+                                      products = ProductCategories.products;
+                                    });
+                                  } catch (e) {
+                                    print('Error updating product: $e');
+                                  }
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: const BottomNavigationBarWidget(currentIndex: 0),
       floatingActionButton: const ChatFloatingActionButton(),
@@ -224,8 +269,9 @@ class _HomePageState extends State<HomePage> {
 
 class ProductCard extends StatelessWidget {
   final Products product;
+  final VoidCallback onLikePressed;
 
-  const ProductCard({required this.product, Key? key}) : super(key: key);
+  const ProductCard({required this.product, required this.onLikePressed, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -280,11 +326,14 @@ class ProductCard extends StatelessWidget {
                     product.manufacturer,
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
-                  Image.asset(
-                    'assets/heart.png',
-                    width: 16,
-                    height: 16,
-                    color: Colors.grey,
+                  GestureDetector(
+                    onTap: onLikePressed,
+                    child: Image.asset(
+                      'assets/heart.png',
+                      width: 16,
+                      height: 16,
+                      color: product.selected ? Colors.red : Colors.grey,
+                    ),
                   ),
                 ],
               ),

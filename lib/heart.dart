@@ -15,6 +15,40 @@ class _HeartPageState extends State<HeartPage> {
   final List<String> categories = ProductCategories.categories;
   Map<String, Future<List<Products>>> products = ProductCategories.products;
 
+  Future<void> _unlikeProduct(Products product) async {
+    try {
+      final updatedProduct = Products(
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        likes: product.likes - 1,
+        selected: false,
+        manufacturer: product.manufacturer,
+        description: product.description,
+      );
+      String productType = '';
+      if (product.image.contains('chair')) {
+        productType = 'chairs';
+      } else if (product.image.contains('sofa')) {
+        productType = 'sofas'; 
+      } else if (product.image.contains('desk')) {
+        productType = 'desks';
+      } else if (product.image.contains('bed')) {
+        productType = 'beds';
+      } else if (product.image.contains('table')) {
+        productType = 'tables';
+      }
+      await ProductService.updateProduct(updatedProduct, productType);
+      await ProductService.refreshProducts();
+      setState(() {
+        products = ProductCategories.products;
+      });
+    } catch (e) {
+      print('Error updating product: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,8 +164,14 @@ class _HeartPageState extends State<HeartPage> {
                                 Icons.favorite,
                                 color: Colors.red,
                               ),
-                              onPressed: () {
-                                // TODO: Implement unlike functionality
+                              onPressed: () async {
+                                await _unlikeProduct(product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('찜하기가 해제되었습니다'),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
                               },
                             ),
                           ],

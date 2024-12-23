@@ -2,7 +2,7 @@
   "chairs": [
     {
       "name": "Chair 1",
-      "manufacturer": "Manufacturer A", 
+      "manufacturer": "Manufacturer A",
       "image": "assets/chair1.png",
       "price": 110000,
       "id": "ABCDEF",
@@ -13,7 +13,7 @@
     {
       "name": "Chair 2",
       "manufacturer": "Manufacturer B",
-      "image": "assets/chair2.png", 
+      "image": "assets/chair2.png",
       "price": 120000,
       "id": "SDFGHD",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
@@ -104,7 +104,7 @@
   "desks": [
     {
       "name": "Desk 1",
-      "manufacturer": "Manufacturer G", 
+      "manufacturer": "Manufacturer G",
       "image": "assets/desk1.png",
       "price": 200000,
       "id": "SDFGJF",
@@ -115,7 +115,7 @@
     {
       "name": "Desk 2",
       "manufacturer": "Manufacturer H",
-      "image": "assets/desk2.png", 
+      "image": "assets/desk2.png",
       "price": 180000,
       "id": "CVBFDG",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
@@ -127,7 +127,7 @@
       "manufacturer": "Manufacturer I",
       "image": "assets/desk3.png",
       "price": 250000,
-      "id": "DFGSFD", 
+      "id": "DFGSFD",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
       "likes": 30,
       "selected": false
@@ -153,7 +153,7 @@
       "selected": false
     },
     {
-      "name": "Desk 6", 
+      "name": "Desk 6",
       "manufacturer": "Manufacturer L",
       "image": "assets/desk6.png",
       "price": 260000,
@@ -164,7 +164,7 @@
     },
     {
       "name": "Desk 7",
-      "manufacturer": "Manufacturer M", 
+      "manufacturer": "Manufacturer M",
       "image": "assets/desk7.png",
       "price": 280000,
       "id": "POIUYT",
@@ -185,7 +185,7 @@
     {
       "name": "Desk 9",
       "manufacturer": "Manufacturer O",
-      "image": "assets/desk9.png", 
+      "image": "assets/desk9.png",
       "price": 320000,
       "id": "MNBVCX",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
@@ -217,7 +217,7 @@
     {
       "name": "Sofa 2",
       "manufacturer": "Manufacturer L",
-      "image": "assets/sofa2.png", 
+      "image": "assets/sofa2.png",
       "price": 3500000,
       "id": "HJGJGF",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
@@ -309,7 +309,7 @@
     {
       "name": "Bed 1",
       "manufacturer": "Manufacturer Q",
-      "image": "assets/bed1.png", 
+      "image": "assets/bed1.png",
       "price": 500000,
       "id": "SDFSDD",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
@@ -321,7 +321,7 @@
       "manufacturer": "Manufacturer R",
       "image": "assets/bed2.png",
       "price": 4500000,
-      "id": "ASDFSD", 
+      "id": "ASDFSD",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
       "likes": 1,
       "selected": true
