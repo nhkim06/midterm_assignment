@@ -2,7 +2,7 @@
   "chairs": [
     {
       "name": "Chair 1",
-      "manufacturer": "Manufacturer A",
+      "manufacturer": "Manufacturer A", 
       "image": "assets/chair1.png",
       "price": 110000,
       "id": "ABCDEF",
@@ -13,7 +13,7 @@
     {
       "name": "Chair 2",
       "manufacturer": "Manufacturer B",
-      "image": "assets/chair2.png",
+      "image": "assets/chair2.png", 
       "price": 120000,
       "id": "SDFGHD",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
@@ -59,12 +59,52 @@
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
       "likes": 100,
       "selected": false
+    },
+    {
+      "name": "Chair 7",
+      "manufacturer": "Manufacturer G",
+      "image": "assets/chair7.png",
+      "price": 140000,
+      "id": "QWERTY",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 15,
+      "selected": false
+    },
+    {
+      "name": "Chair 8",
+      "manufacturer": "Manufacturer H",
+      "image": "assets/chair8.png",
+      "price": 160000,
+      "id": "ASDFGH",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 30,
+      "selected": true
+    },
+    {
+      "name": "Chair 9",
+      "manufacturer": "Manufacturer I",
+      "image": "assets/chair9.png",
+      "price": 170000,
+      "id": "ZXCVBN",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 45,
+      "selected": false
+    },
+    {
+      "name": "Chair 10",
+      "manufacturer": "Manufacturer J",
+      "image": "assets/chair10.png",
+      "price": 190000,
+      "id": "POIUYT",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 60,
+      "selected": true
     }
   ],
   "desks": [
     {
       "name": "Desk 1",
-      "manufacturer": "Manufacturer G",
+      "manufacturer": "Manufacturer G", 
       "image": "assets/desk1.png",
       "price": 200000,
       "id": "SDFGJF",
@@ -75,7 +115,7 @@
     {
       "name": "Desk 2",
       "manufacturer": "Manufacturer H",
-      "image": "assets/desk2.png",
+      "image": "assets/desk2.png", 
       "price": 180000,
       "id": "CVBFDG",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
@@ -87,7 +127,7 @@
       "manufacturer": "Manufacturer I",
       "image": "assets/desk3.png",
       "price": 250000,
-      "id": "DFGSFD",
+      "id": "DFGSFD", 
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
       "likes": 30,
       "selected": false
@@ -100,6 +140,66 @@
       "id": "YUIIOU",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
       "likes": 20,
+      "selected": false
+    },
+    {
+      "name": "Desk 5",
+      "manufacturer": "Manufacturer K",
+      "image": "assets/desk5.png",
+      "price": 240000,
+      "id": "QWEASD",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 15,
+      "selected": false
+    },
+    {
+      "name": "Desk 6", 
+      "manufacturer": "Manufacturer L",
+      "image": "assets/desk6.png",
+      "price": 260000,
+      "id": "ZXCVBN",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 25,
+      "selected": false
+    },
+    {
+      "name": "Desk 7",
+      "manufacturer": "Manufacturer M", 
+      "image": "assets/desk7.png",
+      "price": 280000,
+      "id": "POIUYT",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 35,
+      "selected": false
+    },
+    {
+      "name": "Desk 8",
+      "manufacturer": "Manufacturer N",
+      "image": "assets/desk8.png",
+      "price": 300000,
+      "id": "LKJHGF",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 45,
+      "selected": false
+    },
+    {
+      "name": "Desk 9",
+      "manufacturer": "Manufacturer O",
+      "image": "assets/desk9.png", 
+      "price": 320000,
+      "id": "MNBVCX",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 55,
+      "selected": false
+    },
+    {
+      "name": "Desk 10",
+      "manufacturer": "Manufacturer P",
+      "image": "assets/desk10.png",
+      "price": 340000,
+      "id": "QAZWSX",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 65,
       "selected": false
     }
   ],
@@ -117,7 +217,7 @@
     {
       "name": "Sofa 2",
       "manufacturer": "Manufacturer L",
-      "image": "assets/sofa2.png",
+      "image": "assets/sofa2.png", 
       "price": 3500000,
       "id": "HJGJGF",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
@@ -163,13 +263,53 @@
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
       "likes": 14,
       "selected": false
+    },
+    {
+      "name": "Sofa 7",
+      "manufacturer": "Manufacturer Q",
+      "image": "assets/sofa7.png",
+      "price": 6000000,
+      "id": "QWERTY",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 5,
+      "selected": false
+    },
+    {
+      "name": "Sofa 8",
+      "manufacturer": "Manufacturer R",
+      "image": "assets/sofa8.png",
+      "price": 6500000,
+      "id": "ASDFGH",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 8,
+      "selected": false
+    },
+    {
+      "name": "Sofa 9",
+      "manufacturer": "Manufacturer S",
+      "image": "assets/sofa9.png",
+      "price": 7000000,
+      "id": "ZXCVBN",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 12,
+      "selected": false
+    },
+    {
+      "name": "Sofa 10",
+      "manufacturer": "Manufacturer T",
+      "image": "assets/sofa10.png",
+      "price": 7500000,
+      "id": "POIUYT",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 15,
+      "selected": false
     }
   ],
   "beds": [
     {
       "name": "Bed 1",
       "manufacturer": "Manufacturer Q",
-      "image": "assets/bed1.png",
+      "image": "assets/bed1.png", 
       "price": 500000,
       "id": "SDFSDD",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
@@ -181,7 +321,7 @@
       "manufacturer": "Manufacturer R",
       "image": "assets/bed2.png",
       "price": 4500000,
-      "id": "ASDFSD",
+      "id": "ASDFSD", 
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
       "likes": 0,
       "selected": true
@@ -204,6 +344,66 @@
       "id": "SDFSDW",
       "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
       "likes": 0,
+      "selected": false
+    },
+    {
+      "name": "Bed 5",
+      "manufacturer": "Manufacturer U",
+      "image": "assets/bed5.png",
+      "price": 580000,
+      "id": "QWEASD",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 15,
+      "selected": false
+    },
+    {
+      "name": "Bed 6",
+      "manufacturer": "Manufacturer V",
+      "image": "assets/bed6.png",
+      "price": 620000,
+      "id": "ZXCVBN",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 25,
+      "selected": false
+    },
+    {
+      "name": "Bed 7",
+      "manufacturer": "Manufacturer W",
+      "image": "assets/bed7.png",
+      "price": 650000,
+      "id": "POIUYT",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 35,
+      "selected": false
+    },
+    {
+      "name": "Bed 8",
+      "manufacturer": "Manufacturer X",
+      "image": "assets/bed8.png",
+      "price": 680000,
+      "id": "LKJHGF",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 45,
+      "selected": false
+    },
+    {
+      "name": "Bed 9",
+      "manufacturer": "Manufacturer Y",
+      "image": "assets/bed9.png",
+      "price": 700000,
+      "id": "MNBVCX",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 55,
+      "selected": false
+    },
+    {
+      "name": "Bed 10",
+      "manufacturer": "Manufacturer Z",
+      "image": "assets/bed10.png",
+      "price": 750000,
+      "id": "QAZWSX",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 65,
       "selected": false
     }
   ],
@@ -264,6 +464,46 @@
       "image": "assets/table6.png",
       "price": 53000000,
       "id": "ASDFGY",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 0,
+      "selected": false
+    },
+    {
+      "name": "Table 7",
+      "manufacturer": "Manufacturer AA",
+      "image": "assets/table7.png",
+      "price": 55000000,
+      "id": "QWERTY",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 0,
+      "selected": false
+    },
+    {
+      "name": "Table 8",
+      "manufacturer": "Manufacturer BB",
+      "image": "assets/table8.png",
+      "price": 57000000,
+      "id": "ASDFGH",
+      "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
+      "likes": 0,
+      "selected": false
+    },
+    {
+      "name": "Table 9",
+      "manufacturer": "Manufacturer CC",
+      "image": "assets/table9.png",
+      "price": 59000000,
+      "id": "ZXCVBN",
+      "description": "The simple design features a comfortable and ergonomic structure. Suitable for long periods of sitting with a modern aesthetic that fits most spaces.",
+      "likes": 0,
+      "selected": false
+    },
+    {
+      "name": "Table 10",
+      "manufacturer": "Manufacturer DD",
+      "image": "assets/table10.png",
+      "price": 61000000,
+      "id": "POIUYT",
       "description": "A stylish modern design that suits any interior. Available in various color options to match personal preferences.",
       "likes": 0,
       "selected": false
