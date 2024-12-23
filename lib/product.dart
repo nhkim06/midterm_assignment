@@ -123,6 +123,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () async {
+            await ProductService.refreshProducts();
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           widget.product['name']!,
           style: const TextStyle(fontSize: 18),

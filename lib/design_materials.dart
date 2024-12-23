@@ -38,13 +38,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
+            automaticallyImplyLeading: false,
             elevation: 0, 
             actions: [
               IconButton(
-                icon: ColorFiltered(
-                  colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-                  child: Image.asset('search.png', width: 20, height: 20),
+                icon: Image.asset(
+                  'assets/search.png',
+                  width: 20,
+                  height: 20,
+                  color: Colors.grey,
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -54,9 +56,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
               IconButton(
-                icon: ColorFiltered(
-                  colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-                  child: Image.asset('cart.png', width: 20, height: 20),
+                icon: Image.asset(
+                  'assets/cart.png',
+                  width: 20,
+                  height: 20,
+                  color: Colors.grey,
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -102,7 +106,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: Image.asset(
-              'home.png',
+              'assets/home.png',
               width: 20,
               height: 20,
               color: currentIndex == 0 ? Colors.black : Colors.grey,
@@ -111,7 +115,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'heart.png',
+              'assets/heart.png',
               width: 20,
               height: 20,
               color: currentIndex == 1 ? Colors.black : Colors.grey,
@@ -120,7 +124,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'user.png',
+              'assets/user.png',
               width: 20,
               height: 20,
               color: currentIndex == 2 ? Colors.black : Colors.grey,
@@ -129,7 +133,6 @@ class BottomNavigationBarWidget extends StatelessWidget {
           ),
         ],
         onTap: (index) {
-          
           Widget page;
           switch (index) {
             case 0:

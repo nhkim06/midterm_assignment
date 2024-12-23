@@ -290,10 +290,10 @@ class ProductCard extends StatelessWidget {
             children: [
               // 상품 이미지
               Center(
-                child: Container(
+                child: SizedBox(
                   width: 80,
                   height: 60,
-                  child: Image.network(
+                  child: Image.asset(
                     product.image,
                     fit: BoxFit.contain,
                   ),

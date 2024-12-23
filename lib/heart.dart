@@ -121,7 +121,7 @@ class _HeartPageState extends State<HeartPage> {
                       children: [
                         // Product image
                         Center(
-                          child: Container(
+                          child: SizedBox(
                             width: 80,
                             height: 60,
                             child: Image.asset(
@@ -139,6 +139,7 @@ class _HeartPageState extends State<HeartPage> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 3),
                         // Product name
@@ -149,15 +150,19 @@ class _HeartPageState extends State<HeartPage> {
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 3),
                         // Product manufacturer
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              product.manufacturer,
-                              style: const TextStyle(fontSize: 12, color: Colors.grey),
+                            Expanded(
+                              child: Text(
+                                product.manufacturer,
+                                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             IconButton(
                               icon: const Icon(
