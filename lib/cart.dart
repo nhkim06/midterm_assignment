@@ -44,7 +44,14 @@ class _CartPageState extends State<CartPage> {
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 0.5,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(
+            color: Colors.grey[300],
+            height: 1.0,
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: cartItems.isEmpty

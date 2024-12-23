@@ -38,11 +38,18 @@ class _HeartPageState extends State<HeartPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Liked Items',
+          '찜한 상품',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 0.5,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(
+            color: Colors.grey[300],
+            height: 1.0,
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: GridView.builder(
