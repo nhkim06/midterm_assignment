@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'design_materials.dart';
-import 'search.dart';
-import 'cart.dart';
-import 'home.dart';
-import 'user.dart';
-import 'chatbot.dart';
+
 
 class HeartPage extends StatefulWidget {
   const HeartPage({Key? key}) : super(key: key);
