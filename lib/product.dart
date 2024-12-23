@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'product_review.dart';
 import 'ProductService.dart';
+import 'productData.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
@@ -41,25 +42,52 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       "rating": 5
     }
   ];
+  final List<String> categories = ProductCategories.categories;
+  Map<String, Future<List<Products>>> products = ProductCategories.products;
+
+  Future<void> loadProductDetails() async {
+    try {
+      String productType = '';
+      if (widget.product['image']!.contains('chair')) {
+        productType = 'chairs';
+      } else if (widget.product['image']!.contains('desk')) {
+        productType = 'desks';
+      } else if (widget.product['image']!.contains('sofa')) {
+        productType = 'sofas';
+      } else if (widget.product['image']!.contains('bed')) {
+        productType = 'beds';
+      } else if (widget.product['image']!.contains('table')) {
+        productType = 'tables';
+      }
+      final String productId = widget.product['id'] ?? '';
+      final product = await ProductService.getOneProduct(productType, productId);
+      
+      setState(() {
+        likeCount = product.likes ?? 0;
+        isLiked = product.selected;
+      });
+      
+    } catch (e) {
+      setState(() {
+        likeCount = 0;
+        isLiked = false;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _loadLikeCount();
-  }
-
-  Future<void> _loadLikeCount() async {
-    try {
-      int count = await ProductService.getLikeCount('chairs', widget.product['id'] ?? '');
-      setState(() {
-        likeCount = count;
+    print('Product Type: ${widget.product}');
+    print('Product Type: ${widget.product['image']!}');
+    print('Product Image: ${widget.product['image']}');
+    print('Product ID: ${widget.product['id']}');
+    print('Categories: $categories');
+    products.forEach((key, value) {
+      value.then((productList) {
+        print('Products for $key: $productList');
       });
-    } catch (e) {
-      print('Error loading like count: $e');
-      setState(() {
-        likeCount = 0; // Set default value on error
-      });
-    }
+    });
   }
 
   double get averageRating {

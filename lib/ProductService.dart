@@ -16,6 +16,16 @@ class ProductService {
     }
   }
 
+  static Future<Products> getOneProduct(String type, String id) async {
+    final response = await http.get(Uri.parse('$baseUrl/$type/$id'));
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return Products.fromJson(json);
+    } else {
+      throw Exception('Failed to load Product: ${response.reasonPhrase}');
+    }
+  }
+
   static Future<Products> createProduct(Products product) async {
     final jsonBody = jsonEncode(product.toJson());
     final response = await http.post(
@@ -56,21 +66,6 @@ class ProductService {
     }
   }
 
-  static Future<int> getLikeCount(String productType, String productId) async {
-  try {
-    final response = await http.get(Uri.parse('$baseUrl/$productType/$productId'));
-
-    if (response.statusCode == 200) {
-      final productData = jsonDecode(response.body);
-      return productData['likes'] ?? 0; 
-    } else {
-      throw Exception('Failed to load product: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error loading like count: $e');
-    return 0;
-  }
-}
 }
 class ProductCategories {
     static final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
