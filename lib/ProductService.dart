@@ -71,5 +71,14 @@ class ProductService {
     return 0;
   }
 }
-
 }
+class ProductCategories {
+    static final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
+    static final Map<String, Future<List<Products>>> products = {
+      '의자': ProductService.getProduct('chairs'),
+      '책상': ProductService.getProduct('desks'), 
+      '소파': ProductService.getProduct('sofas'),
+      '침대': ProductService.getProduct('beds'),
+      '식탁': ProductService.getProduct('tables'),
+    };
+  }

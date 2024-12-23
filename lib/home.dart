@@ -13,14 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<String> categories = ['의자', '책상', '소파', '침대', '식탁'];
-  Map<String, Future<List<Products>>> products = {
-    '의자': ProductService.getProduct('chairs'),
-    '책상': ProductService.getProduct('desks'), 
-    '소파': ProductService.getProduct('sofas'),
-    '침대': ProductService.getProduct('beds'),
-    '식탁': ProductService.getProduct('tables'),
-  };
+  final List<String> categories = ProductCategories.categories;
+  Map<String, Future<List<Products>>> products = ProductCategories.products;
 
   String selectedCategory = '의자';
   String currentImage = 'assets/adv1.png';
