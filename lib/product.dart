@@ -56,6 +56,63 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     isLiked = (widget.product['selected'] == 'true');
   }
 
+  Future<void> _toggleLike() async {
+    try {
+      final updatedProduct = Products(
+        id: widget.product['id']!,
+        name: widget.product['name']!,
+        price: int.parse(widget.product['price']!), 
+        image: widget.product['image']!,
+        
+        likes: isLiked ? likeCount - 1 : likeCount + 1,
+        selected: !isLiked,
+        manufacturer: widget.product['manufacturer']!,
+        description: widget.product['description']!,
+      );
+
+      String productType = '';
+      if (updatedProduct.image.contains('chair')) {
+        productType = 'chairs';
+      } else if (updatedProduct.image.contains('sofa')) {
+        productType = 'sofas';
+      } else if (updatedProduct.image.contains('desk')) {
+        productType = 'desks';
+      } else if (updatedProduct.image.contains('bed')) {
+        productType = 'beds';
+      } else if (updatedProduct.image.contains('table')) {
+        productType = 'tables';
+      }
+
+      await ProductService.updateProduct(updatedProduct, productType);
+      await ProductService.refreshProducts();
+
+      setState(() {
+        if (isLiked) {
+          likeCount--;
+        } else {
+          likeCount++;
+        }
+        isLiked = !isLiked;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(isLiked ? '좋아요 추가됨' : '좋아요 취소됨'),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 1),
+        ),
+      );
+    } catch (e) {
+      print('Error updating like: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('좋아요 업데이트 실패'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
   double get averageRating {
     if (reviews.isEmpty) return 0.0; // Handle case with no reviews
     double totalRating = reviews.fold(0.0, (sum, review) => sum + review['rating']);
@@ -119,24 +176,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   // 좋아요
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (isLiked) {
-                          likeCount--;
-                        } else {
-                          likeCount++;
-                        }
-                        isLiked = !isLiked;
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(isLiked ? '좋아요 추가됨' : '좋아요 취소됨'),
-                            behavior: SnackBarBehavior.floating,
-                            duration: const Duration(seconds: 1),
-                          ),
-                        );
-                      });
-                    },
+                    onTap: _toggleLike,
                     child: Row(
                       children: [
                         ColorFiltered(
@@ -306,7 +346,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   controller: contentController,
                   maxLines: 4,
                   decoration: InputDecoration(
-                    labelText: '문의할 내용을 입력해주세요.',
+                    labelText: '문의할 내용을 입력해주세��.',
                     labelStyle: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
@@ -341,7 +381,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 const SizedBox(height: 30),
 
-                // 등록 버튼
+                // ��록 버튼
                 ElevatedButton(
                   onPressed: () {
                     String title = titleController.text.trim();
@@ -481,7 +521,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                 ),
               ),
-              // 리뷰 더보기
+              // 리��� 더보기
               if (reviews.length > 2)
                 TextButton(
                   onPressed: () {
