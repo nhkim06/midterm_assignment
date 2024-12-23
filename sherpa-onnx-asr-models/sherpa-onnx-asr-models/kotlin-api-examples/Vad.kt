@@ -1,1 +1,0 @@
-../android/SherpaOnnxVad/app/src/main/java/com/k2fsa/sherpa/onnx/Vad.kt
