@@ -6,6 +6,8 @@ import 'user.dart';
 import 'search.dart';
 import 'cart.dart';
 import 'chatbot.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart';
+
 
 //**********************************************************상단 바 디자인**********************************************************//
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
