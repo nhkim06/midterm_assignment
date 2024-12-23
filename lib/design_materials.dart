@@ -6,6 +6,9 @@ import 'user.dart';
 import 'search.dart';
 import 'cart.dart';
 import 'chatbot.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
 
 //**********************************************************상단 바 디자인**********************************************************//
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -182,104 +185,52 @@ class ChatFloatingActionButton extends StatelessWidget {
 
 //**********************************************************음성 인식**********************************************************//
 class VoiceRecordBottomSheet extends StatelessWidget {
-  const VoiceRecordBottomSheet({Key? key}) : super(key: key);
+  final Function startListening;
+  final Function stopListening;
+  final bool isListening;
+
+  const VoiceRecordBottomSheet({
+    Key? key,
+    required this.startListening,
+    required this.stopListening,
+    required this.isListening,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(50.0)),
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        height: 300,
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch, 
-          children: [
-            // Close button at the top right
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                icon: const Icon(Icons.close, color: Colors.grey),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      height: 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: () {
+              if (isListening) {
+                stopListening();
+              } else {
+                startListening();
+              }
+            },
+            child: CircleAvatar(
+              radius: 40,
+              backgroundColor: isListening ? Colors.red : Colors.green,
+              child: Icon(
+                isListening ? Icons.mic_off : Icons.mic,
+                size: 40,
+                color: Colors.white,
               ),
             ),
-            const SizedBox(height: 20.0), 
-            // Mic icon in the center
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  // Implement recording functionality
-                },
-                child: Image.asset(
-                  'assets/mic.png', 
-                  width: 50, 
-                  height: 50, 
-                  color: Colors.green, 
-                ),
-              ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            isListening ? 'Listening...' : 'Tap to Speak',
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.black,
             ),
-            const SizedBox(height: 20.0),
-            const LinearProgressIndicator(
-              color: Colors.green, 
-            ),
-            const SizedBox(height: 8.0), 
-            const Center(
-              child: Text(
-                '듣는 중...',
-                style: TextStyle(
-                  color: Colors.black, 
-                  fontSize: 16.0, 
-                ),
-              ),
-            ),
-            const Spacer(), 
-            Row(
-              children: [
-                // "다시 말하기" button
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {
-                      // Implement re-record functionality
-                    },
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.grey), 
-                      backgroundColor: Colors.white, 
-                      padding: const EdgeInsets.symmetric(vertical: 16.0), 
-                    ),
-                    child: const Text(
-                      '다시 말하기',
-                      style: TextStyle(
-                        color: Colors.grey, 
-                        fontSize: 16.0, 
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8.0), 
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context); 
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey, 
-                      padding: const EdgeInsets.symmetric(vertical: 16.0), 
-                    ),
-                    child: const Text(
-                      '완료',
-                      style: TextStyle(
-                        color: Colors.white, 
-                        fontSize: 16.0, 
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
