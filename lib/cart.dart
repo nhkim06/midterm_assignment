@@ -38,36 +38,90 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: const Color(0xFFF5F5F5), width: 1),
-            ),
-          ),
-          child: AppBar(
-            title: const Text('장바구니'),
-            backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text(
+          '장바구니',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(
+            color: Colors.grey[300],
+            height: 1.0,
           ),
         ),
       ),
+      backgroundColor: Colors.white,
       body: cartItems.isEmpty
           ? const Center(child: Text('장바구니가 비어 있습니다.'))
           : ListView.builder(
+              padding: const EdgeInsets.all(8.0),
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
                 final item = cartItems[index];
-                return Card(
-                  child: ListTile(
-                    leading: Image.asset(item['image'] ?? '', width: 50, height: 50, fit: BoxFit.cover),
-                    title: Text(item['name'] ?? ''),
-                    subtitle: Text('${item['manufacturer']} - ${item['price']}'),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () {
-                        _removeItem(index);
-                      },
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF5F5F5),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 60,
+                            child: Image.asset(
+                              item['image']!,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item['price']!,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  item['name']!,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  item['manufacturer']!,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onPressed: () => _removeItem(index),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
