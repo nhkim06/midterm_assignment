@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'design_materials.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -44,6 +45,8 @@ class _SearchPageState extends State<SearchPage> {
   
   final List<String> _searchRanking = ['상품 A', '상품 B', '상품 C']; 
 
+  final SpeechToText speechToText = SpeechToText();
+  bool isListening = false;
 
   @override
   void initState() {
@@ -124,7 +127,28 @@ class _SearchPageState extends State<SearchPage> {
                             showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return VoiceRecordBottomSheet();
+                                return VoiceRecordBottomSheet(
+                                  startListening: () async {
+                                    bool available = await speechToText.initialize();
+                                    if (available) {
+                                      setState(() {
+                                        isListening = true;
+                                      });
+                                      await speechToText.listen(
+                                        onResult: (result) {
+                                          // Handle the speech result
+                                        },
+                                      );
+                                    }
+                                  },
+                                  stopListening: () async {
+                                    setState(() {
+                                      isListening = false;
+                                    });
+                                    await speechToText.stop();
+                                  },
+                                  isListening: isListening,
+                                );
                               },
                             );
                           },

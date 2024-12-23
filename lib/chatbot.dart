@@ -1,17 +1,50 @@
-// 챗봇 페이지 (UI완)
-// + 챗봇, 챗봇 가구 추천, 유저 말풍선 디자인
-
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'design_materials.dart';
 
 //**********************************************************챗봇 페이지 코드**********************************************************/
-class ChatbotPage extends StatelessWidget {
+class ChatbotPage extends StatefulWidget {
   const ChatbotPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController messageController = TextEditingController();
+  State<ChatbotPage> createState() => _ChatbotPageState();
+}
 
+class _ChatbotPageState extends State<ChatbotPage> {
+  final TextEditingController messageController = TextEditingController();
+  late stt.SpeechToText _speech;
+  bool _isListening = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _speech = stt.SpeechToText();
+  }
+
+  void _startListening() async {
+    bool available = await _speech.initialize(
+      onStatus: (status) => print('Speech Status: $status'),
+      onError: (error) => print('Speech Error: $error'),
+    );
+    if (available) {
+      setState(() => _isListening = true);
+      _speech.listen(onResult: (result) {
+        setState(() {
+          messageController.text = result.recognizedWords;
+        });
+      });
+    } else {
+      print('The user has denied the use of speech recognition.');
+    }
+  }
+
+  void _stopListening() {
+    setState(() => _isListening = false);
+    _speech.stop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -30,13 +63,13 @@ class ChatbotPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16.0),
                 children: [
-                  const ChatbotChat(message: '어떤 상품을 찾으세요?'), 
-                  const SizedBox(height: 8), 
+                  const ChatbotChat(message: '어떤 상품을 찾으세요?'),
+                  const SizedBox(height: 8),
                   const UserChat(message: '심플하면서 화려한 가구 추천해줘'),
                   const SizedBox(height: 8),
                   const ChatbotRecommendChat(),
-                  const SizedBox(height: 8), 
-                  ],
+                  const SizedBox(height: 8),
+                ],
               ),
             ),
 
@@ -47,7 +80,7 @@ class ChatbotPage extends StatelessWidget {
                 ),
               ),
             ),
-            // 입력 칸 
+            // 입력 칸
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -74,7 +107,11 @@ class ChatbotPage extends StatelessWidget {
                                 context: context,
                                 backgroundColor: Colors.white,
                                 builder: (BuildContext context) {
-                                  return const VoiceRecordBottomSheet();
+                                  return VoiceRecordBottomSheet(
+                                    startListening: _startListening,
+                                    stopListening: _stopListening,
+                                    isListening: _isListening,
+                                  );
                                 },
                               );
                             },
@@ -107,10 +144,7 @@ class ChatbotPage extends StatelessWidget {
   }
 }
 
-
-
 //**********************************************************챗봇 말풍선 디자인**********************************************************/
-
 class ChatbotChat extends StatelessWidget {
   final String message;
 
@@ -121,8 +155,8 @@ class ChatbotChat extends StatelessWidget {
     return Row(
       children: [
         CircleAvatar(
-          radius: 24, 
-          backgroundColor: const Color(0xFFD5FDC1), 
+          radius: 24,
+          backgroundColor: const Color(0xFFD5FDC1),
           child: Image.asset(
             'assets/chatbot.png',
             color: const Color(0xFF529147),
@@ -130,19 +164,19 @@ class ChatbotChat extends StatelessWidget {
             width: 24,
           ),
         ),
-        const SizedBox(width: 8), 
+        const SizedBox(width: 8),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), 
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey), 
+            border: Border.all(color: Colors.grey),
           ),
           child: Text(
             message,
             style: const TextStyle(
-              fontSize: 16, 
-              color: Colors.black, 
+              fontSize: 16,
+              color: Colors.black,
             ),
           ),
         ),
@@ -150,82 +184,6 @@ class ChatbotChat extends StatelessWidget {
     );
   }
 }
-
-//**********************************************************챗봇 가구 추천 말풍선 디자인**********************************************************/
-class ChatbotRecommendChat extends StatelessWidget {
-  const ChatbotRecommendChat({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: const Color(0xFFD5FDC1),
-              child: Image.asset(
-                'assets/chatbot.png',
-                color: const Color(0xFF529147),
-                height: 24,
-                width: 24,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.grey),
-              ),
-              child: const Text(
-                '말씀하신 내용의 상품 추천드립니다.',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // Display product images with border
-            const SizedBox(width: 58), 
-            _buildImageContainer('assets/desk2.png'),
-            const SizedBox(width: 8),
-            _buildImageContainer('assets/sofa3.png'),
-            const SizedBox(width: 8), 
-            _buildImageContainer('assets/table2.png'),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildImageContainer(String imagePath) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey), 
-        borderRadius: BorderRadius.circular(8), 
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8), 
-        child: Image.asset(
-          imagePath,
-          width: 60,
-          height: 60,
-          fit: BoxFit.cover,  
-        ),
-      ),
-    );
-  }
-}
-
 
 //**********************************************************유저 말풍선 디자인**********************************************************/
 class UserChat extends StatelessWidget {
@@ -241,20 +199,31 @@ class UserChat extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: Colors.green.shade100,
-            borderRadius: BorderRadius.circular(20), 
+            borderRadius: BorderRadius.circular(20),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), 
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Text(
             message,
             style: const TextStyle(
-              fontSize: 16, 
-              color: Colors.black, 
+              fontSize: 16,
+              color: Colors.black,
             ),
           ),
         ),
-        const SizedBox(width: 8), 
+        const SizedBox(width: 8),
       ],
     );
   }
 }
 
+// Add this class after UserChat class
+class ChatbotRecommendChat extends StatelessWidget {
+  const ChatbotRecommendChat({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChatbotChat(
+      message: '심플하면서도 화려한 가구를 추천해드리겠습니다. 다음과 같은 제품들은 어떠신가요?',
+    );
+  }
+}
